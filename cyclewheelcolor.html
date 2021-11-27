@@ -3,6 +3,8 @@
     <head>
         <title>Color Wheel</title>
         <script src="js/jscolor.js"></script>
+        <script src="js/tinycolor.js"></script>
+        <script src="js/ntc.js"></script>
         <link rel="stylesheet" type="text/css" href="css/colors.css">
         <script src="js/CircularDoublyLinkedList.js"></script>
 
@@ -70,6 +72,7 @@
             </div>
 
             <input id="ColorSelector" data-jscolor="{preset:'dark large'}">
+            <button id="saveCustomColor" onclick="onSaveColorClick();return false;">Save Custom Color</button>
 
             <!--
             This line is a test line to see how I can interact with the color return statements. :D
