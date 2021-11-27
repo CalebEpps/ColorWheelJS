@@ -3,9 +3,9 @@ Quick Access Shorthands:
 document.querySelector('#ColorSelector').jscolor <-- Gets the jscolor instance from the HTML
  */
 
-
-
 let wheel = new circularLinkedListClass();
+// Currently Unused CDLL for custom colors.
+// TODO: IMPLEMENT THE GODDAMN CUSTOM COLOR CDLL FFS
 let customWheel = new circularLinkedListClass();
 
 class CustomColor {
@@ -148,12 +148,16 @@ let onColorClick = function(colorName) {
 }
 
 let onSaveColorClick = function() {
+    // This variable holds the hex value of whatever the color selection is atm.
     let savedColor = document.querySelector('#ColorSelector').jscolor.toHEXString();
+    // Testing Log
     console.log("The chosen color is: " + savedColor);
+    // We DON'T proceed if the color is pure white or pure black.
     if(savedColor.valueOf() == "#FFFFFF") {
         console.log("Cannot Save Pure White cuz that shit is pasttyyyyyy");
     } else if(savedColor.valueOf() == "#000000") {
         console.log("Cannot Save Pure Black")
+        // Here we do proceed.
     } else {
         // Define some colors by playing wheel of fortune
         let compColor = tinycolor(savedColor).spin(180);
@@ -177,21 +181,14 @@ let onSaveColorClick = function() {
         console.log("The clockwise supplementary color is: " + colorToAdd.suppOneName);
         console.log("The counter-clockwise supplementary color is: " + colorToAdd.suppTwoName);
 
+        // this just makes the code a tad cleaner and easier to write.
         let idCurrentColor = document.getElementById("ColorToChange");
-        // Console Log for Testing Purposes
-
         let idCompColor = document.getElementById("Complementary");
-
         let idAnalOne = document.getElementById("AnalogousOne");
-
         let idAnalTwo = document.getElementById("AnalogousTwo");
-
         let idTriOne = document.getElementById("TriadicOne");
-
         let idTriTwo = document.getElementById("TriadicTwo");
-
         let idSupOne = document.getElementById("SupplementaryOne");
-
         let idSupTwo = document.getElementById("SupplementaryTwo");
 
         idCurrentColor.innerHTML = colorToAdd.codeName;
@@ -248,7 +245,17 @@ let onSaveColorClick = function() {
 // This method creates and returns a color object with the color names included. Pretty sick huh? (KILL ME THIS WAS AWFUL
 // TO MAKE)
 let getColorNames = function(savedColor, compColor, triadicColorOne, triadicColorTwo, analColorOne, analColorTwo, suppColorOne, suppColorTwo) {
+/*
+Quick Rundown of how this syntax works rq by using the first one as an example:
+let savedColorArr = ntc.name(savedColor);
+^ this is an array.   ^ ntc.name takes the savedColor (or the selectedColor) and finds its closest match in a database of names.
+                        It returns an array with that looks like: {"Input Color", "Closest Match Name", "Exact Match RGBA"}
 
+let colorName = savedColorArr[1];
+                 ^ This is the "Closest Match Name" mentioned above. That's how I am getting the color names. :)
+
+ Then it's just rinse and repeat!
+ */
     let savedColorarr = ntc.name(savedColor);
     let colorName = savedColorarr[1];
 
@@ -273,6 +280,7 @@ let getColorNames = function(savedColor, compColor, triadicColorOne, triadicColo
     let suppTwoArr = ntc.name(suppColorTwo);
     let suppTwoName = suppTwoArr[1];
 
+// Here we return the super long custom color object.
     return new CustomColor(savedColor, compColor, triadicColorOne, triadicColorTwo, analColorOne, analColorTwo, suppColorOne, suppColorTwo,
                             colorName, compName, triadicOneName, triadicTwoName, analOneName, analTwoName, suppOneName, suppTwoName);
 
