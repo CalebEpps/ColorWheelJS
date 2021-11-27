@@ -107,8 +107,8 @@ let onColorClick = function(colorName) {
     idSupTwo.innerHTML = supplementaryTwo.element.colorName;
 
     idSupTwo.style.color = supplementaryTwo.element.colorCode;
+
+    // This is a test line. It's just making sure that I can return the color I need to :D
+    //document.getElementById("testChange").innerHTML = document.querySelector('#ColorSelector').jscolor.toHEXString();
 }
 
-jscolor.install(); // to immediately install pickers on elements with data-jscolor
-
-document.querySelector('#ColorSelector').show();
