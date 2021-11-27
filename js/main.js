@@ -1,5 +1,8 @@
+
+
 // ES6 Class Based Implementation of a CDLL
 // Define Node class, used below.
+
 class Node {
     constructor(element, next = null, previous = null) {
         this.element = element;
@@ -81,7 +84,7 @@ class Color {
 
 // THIS IS **NOT** all of the colors nor are they correct. This is just a sample
 // CDLL I made up to test the CDLL functions. Similar in Syntax to Java Implementation
-myClass = new circularLinkedListClass();
+let myClass = new circularLinkedListClass();
 
 myClass.add(new Color("Red Orange", "#FD5308"));
 myClass.add(new Color("Orange", "#FB9902"));
@@ -97,46 +100,46 @@ myClass.add(new Color("Magenta", "#A7194B"));
 myClass.add(new Color("Red", "#FE2712"));
 
 // Initialize all of the colors so they aren't sitting at null.
-currentColor = myClass.head;
-complementaryColor = myClass.traverseTo(6, currentColor);
-analogousOne = myClass.traverseTo(1,currentColor);
-analogousTwo = myClass.traverseTo(-1,currentColor);
-triadicOne = myClass.traverseTo(4,currentColor);
-triadicTwo = myClass.traverseTo(-4,currentColor);
-supplementaryOne = myClass.traverseTo(3,currentColor);
-supplementaryTwo = myClass.traverseTo(-3,currentColor);
+let currentColor = myClass.head;
+let complementaryColor = myClass.traverseTo(6, currentColor);
+let analogousOne = myClass.traverseTo(1,currentColor);
+let analogousTwo = myClass.traverseTo(-1,currentColor);
+let triadicOne = myClass.traverseTo(4,currentColor);
+let triadicTwo = myClass.traverseTo(-4,currentColor);
+let supplementaryOne = myClass.traverseTo(3,currentColor);
+let supplementaryTwo = myClass.traverseTo(-3,currentColor);
 
 // On Click functionality for our buttons.
 // Color name is passed from HTML, used to traverse the CDLL, and display the colors to the user.
-function onColorClick(colorName) {
+let onColorClick = function(colorName) {
     // console Log for viewing the color name. Testing Purposes.
     console.log(colorName);
     // Set the colors to the appropriate ones
     currentColor = myClass.traverseToByName(colorName, currentColor);
-    idCurrentColor = document.getElementById("ColorToChange");
+    let idCurrentColor = document.getElementById("ColorToChange");
     // Console Log for Testing Purposes
     console.log(currentColor.element.colorName);
 
     complementaryColor = myClass.traverseTo(6, currentColor);
-    idCompColor = document.getElementById("Complementary");
+    let idCompColor = document.getElementById("Complementary");
 
     analogousOne = myClass.traverseTo(1, currentColor);
-    idAnalOne = document.getElementById("AnalogousOne");
+    let idAnalOne = document.getElementById("AnalogousOne");
 
     analogousTwo = myClass.traverseTo(-1, currentColor);
-    idAnalTwo = document.getElementById("AnalogousTwo");
+    let idAnalTwo = document.getElementById("AnalogousTwo");
 
     triadicOne = myClass.traverseTo(4,currentColor);
-    idTriOne = document.getElementById("TriadicOne");
+    let idTriOne = document.getElementById("TriadicOne");
 
     triadicTwo = myClass.traverseTo(-4,currentColor);
-    idTriTwo = document.getElementById("TriadicTwo");
+    let idTriTwo = document.getElementById("TriadicTwo");
 
     supplementaryOne = myClass.traverseTo(3,currentColor);
-    idSupOne = document.getElementById("SupplementaryOne");
+    let idSupOne = document.getElementById("SupplementaryOne");
 
     supplementaryTwo = myClass.traverseTo(-3,currentColor);
-    idSupTwo = document.getElementById("SupplementaryTwo");
+    let idSupTwo = document.getElementById("SupplementaryTwo");
 
     idCurrentColor.innerHTML = currentColor.element.colorName;
     idCurrentColor.style.color = currentColor.element.colorCode;
@@ -181,6 +184,4 @@ function onColorClick(colorName) {
     idSupTwo.innerHTML = supplementaryTwo.element.colorName;
     
     idSupTwo.style.color = supplementaryTwo.element.colorCode;
-    
-
 }
