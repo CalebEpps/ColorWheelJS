@@ -1,3 +1,8 @@
+/*
+Quick Access Shorthands:
+document.querySelector('#ColorSelector').jscolor <-- Gets the jscolor instance from the HTML
+ */
+
 class Color {
     constructor(colorName, colorCode) {
         this.colorName = colorName;
@@ -7,30 +12,30 @@ class Color {
 
 // THIS IS **NOT** all of the colors nor are they correct. This is just a sample
 // CDLL I made up to test the CDLL functions. Similar in Syntax to Java Implementation
-let myClass = new circularLinkedListClass();
+let wheel = new circularLinkedListClass();
 
-myClass.add(new Color("Red Orange", "#FD5308"));
-myClass.add(new Color("Orange", "#FB9902"));
-myClass.add(new Color("Light Orange", "#F9BC02"));
-myClass.add(new Color("Yellow", "#FFFE32"));
-myClass.add(new Color("Lime Green", "#D0E92B"));
-myClass.add(new Color("Green", "#66B132"));
-myClass.add(new Color("Light Blue", "#0291CB"));
-myClass.add(new Color("Blue", "#0247FE"));
-myClass.add(new Color("Violet", "#3E01A4"));
-myClass.add(new Color("Purple", "#8601B0"));
-myClass.add(new Color("Magenta", "#A7194B"));
-myClass.add(new Color("Red", "#FE2712"));
+wheel.add(new Color("Red Orange", "#FD5308"));
+wheel.add(new Color("Orange", "#FB9902"));
+wheel.add(new Color("Light Orange", "#F9BC02"));
+wheel.add(new Color("Yellow", "#FFFE32"));
+wheel.add(new Color("Lime Green", "#D0E92B"));
+wheel.add(new Color("Green", "#66B132"));
+wheel.add(new Color("Light Blue", "#0291CB"));
+wheel.add(new Color("Blue", "#0247FE"));
+wheel.add(new Color("Violet", "#3E01A4"));
+wheel.add(new Color("Purple", "#8601B0"));
+wheel.add(new Color("Magenta", "#A7194B"));
+wheel.add(new Color("Red", "#FE2712"));
 
 // Initialize all of the colors so they aren't sitting at null.
-let currentColor = myClass.head;
-let complementaryColor = myClass.traverseTo(6, currentColor);
-let analogousOne = myClass.traverseTo(1,currentColor);
-let analogousTwo = myClass.traverseTo(-1,currentColor);
-let triadicOne = myClass.traverseTo(4,currentColor);
-let triadicTwo = myClass.traverseTo(-4,currentColor);
-let supplementaryOne = myClass.traverseTo(3,currentColor);
-let supplementaryTwo = myClass.traverseTo(-3,currentColor);
+let currentColor = wheel.head;
+let complementaryColor = wheel.traverseTo(6, currentColor);
+let analogousOne = wheel.traverseTo(1,currentColor);
+let analogousTwo = wheel.traverseTo(-1,currentColor);
+let triadicOne = wheel.traverseTo(4,currentColor);
+let triadicTwo = wheel.traverseTo(-4,currentColor);
+let supplementaryOne = wheel.traverseTo(3,currentColor);
+let supplementaryTwo = wheel.traverseTo(-3,currentColor);
 
 // On Click functionality for our buttons.
 // Color name is passed from HTML, used to traverse the CDLL, and display the colors to the user.
@@ -38,30 +43,30 @@ let onColorClick = function(colorName) {
     // console Log for viewing the color name. Testing Purposes.
     console.log(colorName);
     // Set the colors to the appropriate ones
-    currentColor = myClass.traverseToByName(colorName, currentColor);
+    currentColor = wheel.traverseToByName(colorName, currentColor);
     let idCurrentColor = document.getElementById("ColorToChange");
     // Console Log for Testing Purposes
     console.log(currentColor.element.colorName);
 
-    complementaryColor = myClass.traverseTo(6, currentColor);
+    complementaryColor = wheel.traverseTo(6, currentColor);
     let idCompColor = document.getElementById("Complementary");
 
-    analogousOne = myClass.traverseTo(1, currentColor);
+    analogousOne = wheel.traverseTo(1, currentColor);
     let idAnalOne = document.getElementById("AnalogousOne");
 
-    analogousTwo = myClass.traverseTo(-1, currentColor);
+    analogousTwo = wheel.traverseTo(-1, currentColor);
     let idAnalTwo = document.getElementById("AnalogousTwo");
 
-    triadicOne = myClass.traverseTo(4,currentColor);
+    triadicOne = wheel.traverseTo(4,currentColor);
     let idTriOne = document.getElementById("TriadicOne");
 
-    triadicTwo = myClass.traverseTo(-4,currentColor);
+    triadicTwo = wheel.traverseTo(-4,currentColor);
     let idTriTwo = document.getElementById("TriadicTwo");
 
-    supplementaryOne = myClass.traverseTo(3,currentColor);
+    supplementaryOne = wheel.traverseTo(3,currentColor);
     let idSupOne = document.getElementById("SupplementaryOne");
 
-    supplementaryTwo = myClass.traverseTo(-3,currentColor);
+    supplementaryTwo = wheel.traverseTo(-3,currentColor);
     let idSupTwo = document.getElementById("SupplementaryTwo");
 
     idCurrentColor.innerHTML = currentColor.element.colorName;
