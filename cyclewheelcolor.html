@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Color Wheel</title>
+        <link rel="stylesheet" type="text/css" href="css/colors.css">
+        <script src="js/CircularDoublyLinkedListJS.js"></script>
+        
+    </head>
+    <body>
+        <div class="title">
+            <h1>COLOR WHEEL</h1>
+        </div>
+        
+        <div class="column" id="wheel">
+            <div class="image">
+                <h2>Choose a color by clicking a segment of the color wheel below</h2>
+                <img src="image/wheel.png" alt="color wheel" usemap="#color_wheel_map" class="circle">
+
+                <map name="color_wheel_map">
+                    <area shape="poly" coords="206,31,331,27,308,120,228,119,206,31" href="" class="color" onclick="onColorClick('Red Orange'); return false;">
+                    <area shape="poly" coords="331,27,445,94,379,161,308,120,331,27" href="" class="color" onclick="onColorClick('Orange'); return false;">
+                    <area shape="poly" coords="445,94,508,204,418,228,379,161,445,94" href="" class="color" onclick="onColorClick('Light Orange'); return false;">
+                    <area shape="poly" coords="508,204,509,335,419,310,418,228,508,204" href="" class="color" onclick="onColorClick('Yellow'); return false;">
+                    <area shape="poly" coords="509,335,445,447,382,381,419,310,509,335" href="" class="color" onclick="onColorClick('Lime Green'); return false;">
+                    <area shape="poly" coords="445,447,332,508,310,418,382,381,445,447" href="" class="color" onclick="onColorClick('Green'); return false;">
+                    <area shape="poly" coords="332,508,207,510,231,420,310,418,332,508" href="" class="color" onclick="onColorClick('Light Blue'); return false;">
+                    <area shape="poly" coords="207,510,94,447,159,381,231,420,207,510" href="" class="color" onclick="onColorClick('Blue'); return false;">
+                    <area shape="poly" coords="94,447,29,334,117,309,159,381,94,447" href="" class="color" onclick="onColorClick('Violet'); return false;">
+                    <area shape="poly" coords="29,334,30,206,120,232,117,309,29,334" href="" class="color" onclick="onColorClick('Purple'); return false;">
+                    <area shape="poly" coords="30,206,92,94,161,161,120,232,30,206" href="" class="color" onclick="onColorClick('Magenta'); return false;">
+                    <area shape="poly" coords="92,94,206,31,228,119,161,161,92,94" href="" class="color" onclick="onColorClick('Red'); return false;">
+                </map>
+            </div>
+        </div>
+       
+        <div class="column">
+               
+            <div id="CurrentColor" class="space">
+                <p id="ColorToChangeNoColor" class="wrapInline">The current color is: </p>
+                <p id="ColorToChange"> </p>
+            </div>
+                    
+            <div id="ComplementaryColor" class="space">
+                <p id="ComplementaryNoChange" class="wrapInline">The complementary color is: </p>
+                <p id="Complementary"> </p>
+            </div>
+                    
+            <div id="AnalogousColors" class="space">
+                <p id="AnalogousColorsNoColor" class="wrapInline"></p>
+                <p id="AnalogousOne" class="wrapInline"> </p>
+                <p id="And" class="wrapInline"> </p>
+                <p id="AnalogousTwo"> </p>
+            </div>
+                    
+            <div id="TriadicColors" class="space">
+                <p id="TriadicColorsNoColor" class="wrapInline"></p>
+                <p id="TriadicOne" class="wrapInline"> </p>
+                <p id="AndTriadic" class="wrapInline"> </p>
+                <p id="TriadicTwo"> </p>
+            </div>
+
+            <div id="SupplementaryColors" class="space">
+                <p id="SupplementaryColorsNoColor" class="wrapInline"></p>
+                <p id="SupplementaryOne" class="wrapInline"> </p>
+                <p id="AndSupplementary" class="wrapInline"> </p>
+                <p id="SupplementaryTwo"> </p>
+            </div>
+               
+        </div>
+        
+    </body>
+</html>
+        
