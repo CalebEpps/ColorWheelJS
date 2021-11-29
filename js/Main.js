@@ -4,10 +4,17 @@ document.querySelector('#ColorSelector').jscolor <-- Gets the jscolor instance f
  */
 
 
+/*
+
+Well  you can store information in local storage which means I don't need to use JSON files lmaoooo.
+Gonna get on that ASAP
+ */
+
 let wheel = new circularLinkedListClass();
 // Currently Unused CDLL for custom colors.
 // TODO: IMPLEMENT THE GODDAMN CUSTOM COLOR CDLL FFS
 let customWheel = new circularLinkedListClass();
+
 
 class CustomColor {
     constructor(colorCode, compColor, triadicColorOne, triadicColorTwo, analColorOne, analColorTwo, suppColorOne, suppColorTwo,
@@ -153,6 +160,7 @@ let onSaveColorClick = function() {
     console.log("The chosen color is: " + savedColor);
     // We DON'T proceed if the color is pure white or pure black.
     if(savedColor.valueOf() == "#FFFFFF") {
+        localStorage.clear();
         console.log("Cannot Save Pure White cuz that shit is pasttyyyyyy");
     } else if(savedColor.valueOf() == "#000000") {
         console.log("Cannot Save Pure Black")
@@ -169,6 +177,7 @@ let onSaveColorClick = function() {
 
         // define a new color and add it to OUR wheel of fortune. (But we don't add it yet)
         let colorToAdd = getColorNames(savedColor,compColor, triadicColorOne, triadicColorTwo, analColorOne, analColorTwo, suppColorOne, suppColorTwo);
+        addCustomColor(colorToAdd);
 
         // Log the color's information because we gotta make sure it's working, yessirrrrr
         console.log("Here's the saved color's (" + colorToAdd.codeName + ") information: ");
@@ -283,6 +292,25 @@ let colorName = savedColorArr[1];
     return new CustomColor(savedColor, compColor, triadicColorOne, triadicColorTwo, analColorOne, analColorTwo, suppColorOne, suppColorTwo,
                             colorName, compName, triadicOneName, triadicTwoName, analOneName, analTwoName, suppOneName, suppTwoName);
 }
+
+
+let addCustomColor = function(color) {
+    localStorage.setItem(color.colorCode, JSON.stringify(color));
+    customWheel.add(color);
+}
+
+let testAllSavedColors = function() {
+    let keys = Object.keys((localStorage));
+    let i = keys.length;
+
+    while(i--) {
+        console.log((localStorage.getItem(keys[i])));
+    }
+}
+
+testAllSavedColors();
+
+
 // Function to populate table.
 let addTableSpot = function(color) {
 
