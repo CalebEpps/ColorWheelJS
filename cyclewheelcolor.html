@@ -2,8 +2,14 @@
 <html lang="en">
     <head>
         <title>Color Wheel</title>
+        <!-- JSColor Library is open source -->
         <script src="js/jscolor.js"></script>
+        <!--- TinyColor v1.4.2
+              https://github.com/bgrins/TinyColor
+              Brian Grinstead, MIT License  -->
         <script src="js/tinycolor.js"></script>
+        <!--- This script is attributed to Chirag Mehta - http://chir.ag/projects/ntc
+        It's under the CC license requiring attribution.-->
         <script src="js/ntc.js"></script>
         <link rel="stylesheet" type="text/css" href="css/colors.css">
         <script src="js/CircularDoublyLinkedList.js"></script>
@@ -73,6 +79,9 @@
 
             <input id="ColorSelector" data-jscolor="{preset:'dark large'}">
             <button id="saveCustomColor" onclick="onSaveColorClick();return false;">Save Custom Color</button>
+            <table id="customColors">
+
+            </table>
 
             <!--
             This line is a test line to see how I can interact with the color return statements. :D

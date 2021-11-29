@@ -3,6 +3,7 @@ Quick Access Shorthands:
 document.querySelector('#ColorSelector').jscolor <-- Gets the jscolor instance from the HTML
  */
 
+
 let wheel = new circularLinkedListClass();
 // Currently Unused CDLL for custom colors.
 // TODO: IMPLEMENT THE GODDAMN CUSTOM COLOR CDLL FFS
@@ -44,8 +45,6 @@ class BaseColor {
 
 // THIS IS **NOT** all of the colors nor are they correct. This is just a sample
 // CDLL I made up to test the CDLL functions. Similar in Syntax to Java Implementation
-
-
 wheel.add(new BaseColor("Red Orange", "#FD5308"));
 wheel.add(new BaseColor("Orange", "#FB9902"));
 wheel.add(new BaseColor("Light Orange", "#F9BC02"));
@@ -159,14 +158,14 @@ let onSaveColorClick = function() {
         console.log("Cannot Save Pure Black")
         // Here we do proceed.
     } else {
-        // Define some colors by playing wheel of fortune
-        let compColor = tinycolor(savedColor).spin(180);
-        let triadicColorOne = tinycolor(savedColor).spin(120);
-        let triadicColorTwo = tinycolor(savedColor).spin(-120);
-        let analColorOne = tinycolor(savedColor).spin(30);
-        let analColorTwo = tinycolor(savedColor).spin(-30);
-        let suppColorOne = tinycolor(savedColor).spin(90);
-        let suppColorTwo = tinycolor(savedColor).spin(-90);
+        // Define some colors by playing wheel of fortune!
+        let compColor = tinycolor(savedColor).spin(180).toHexString();
+        let triadicColorOne = tinycolor(savedColor).spin(120).toHexString();
+        let triadicColorTwo = tinycolor(savedColor).spin(-120).toHexString();
+        let analColorOne = tinycolor(savedColor).spin(30).toHexString();
+        let analColorTwo = tinycolor(savedColor).spin(-30).toHexString();
+        let suppColorOne = tinycolor(savedColor).spin(90).toHexString();
+        let suppColorTwo = tinycolor(savedColor).spin(-90).toHexString();
 
         // define a new color and add it to OUR wheel of fortune. (But we don't add it yet)
         let colorToAdd = getColorNames(savedColor,compColor, triadicColorOne, triadicColorTwo, analColorOne, analColorTwo, suppColorOne, suppColorTwo);
@@ -283,7 +282,8 @@ let colorName = savedColorArr[1];
 // Here we return the super long custom color object.
     return new CustomColor(savedColor, compColor, triadicColorOne, triadicColorTwo, analColorOne, analColorTwo, suppColorOne, suppColorTwo,
                             colorName, compName, triadicOneName, triadicTwoName, analOneName, analTwoName, suppOneName, suppTwoName);
-
-
+}
+// Function to populate table.
+let addTableSpot = function(color) {
 
 }
