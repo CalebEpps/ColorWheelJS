@@ -35,7 +35,7 @@ class circularLinkedListClass {
             this.tail.next = this.head;
             this.length++;
     }
-// Methods that are used to set the nodes to their next and previous values. Only works if they return something.
+// Methods that are used to set the nodes to their next and previous values. Only works if they return something because javascript.
     skipBackwards = function (node) {
         return node.previous;
     }
@@ -43,16 +43,21 @@ class circularLinkedListClass {
     skipForwards = function (node) {
         return node.next;
     }
-// This method is confirmed working.
+
     traverseTo(traverseTo, node) {
+        // Counter will be used to control the iterations of our while loop.
         let counter = 0;
+        // If traverseTo is greater than 0, we traverse the wheel clockwise by skipping the node forwards.
         if(traverseTo > 0) {
             while(counter < traverseTo) {
                 node = this.skipForwards(node);
                 counter++;
             }
+            // Return the node. Required in javascript for some reason. lol
             return node;
         } else {
+            // If traverseTo is *less than* 0, we traverse the wheel counterclockwise.
+            // This is done by getting the absolute value of traverseTo and skipping the node backwards.
             traverseTo = Math.abs(traverseTo);
             while(counter < traverseTo) {
                 node = this.skipBackwards(node);

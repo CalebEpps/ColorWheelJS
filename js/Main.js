@@ -293,12 +293,14 @@ let colorName = savedColorArr[1];
                             colorName, compName, triadicOneName, triadicTwoName, analOneName, analTwoName, suppOneName, suppTwoName);
 }
 
-
+// This just populates shit. // LOCAL STORAGE WORKS IN CHROME.
 let addCustomColor = function(color) {
     localStorage.setItem(color.colorCode, JSON.stringify(color));
     customWheel.add(color);
 }
 
+// TODO: Ensure that the keys that are stored are unique for returning. Make sure duplicate
+// TODO: can't be added.
 let testAllSavedColors = function() {
     let keys = Object.keys((localStorage));
     let i = keys.length;
@@ -307,7 +309,7 @@ let testAllSavedColors = function() {
         console.log((localStorage.getItem(keys[i])));
     }
 }
-
+// Method can be removed once program is working.
 testAllSavedColors();
 
 
