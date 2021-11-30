@@ -69,9 +69,9 @@ class circularLinkedListClass {
     }
 // This function is currently unused and untested, but it should work.
     traverseToByName(colorName, node) {
-        while(colorName.valueOf() != (node.element.colorName).valueOf()) {
+        while(colorName.valueOf() !== (node.element.codeName).valueOf()) {
             node = this.skipForwards(node);
-            console.log(node.element.colorName);
+            console.log("Found color was: " + node.element.codeName);
         }
         return node;
     }

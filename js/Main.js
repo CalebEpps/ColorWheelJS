@@ -14,6 +14,8 @@ let wheel = new circularLinkedListClass();
 // Currently Unused CDLL for custom colors.
 // TODO: IMPLEMENT THE GODDAMN CUSTOM COLOR CDLL FFS
 let customWheel = new circularLinkedListClass();
+let lengthOfCustomWheel = 0;
+let currentCustomColor;
 
 
 class CustomColor {
@@ -45,7 +47,7 @@ class CustomColor {
 
 class BaseColor {
     constructor(colorName, colorCode) {
-        this.colorName = colorName;
+        this.codeName = colorName;
         this.colorCode = colorCode;
     }
 }
@@ -84,7 +86,7 @@ let onColorClick = function(colorName) {
     currentColor = wheel.traverseToByName(colorName, currentColor);
     let idCurrentColor = document.getElementById("ColorToChange");
     // Console Log for Testing Purposes
-    console.log(currentColor.element.colorName);
+    console.log(currentColor.element.codeName);
 
     complementaryColor = wheel.traverseTo(6, currentColor);
     let idCompColor = document.getElementById("Complementary");
@@ -107,47 +109,47 @@ let onColorClick = function(colorName) {
     supplementaryTwo = wheel.traverseTo(-3,currentColor);
     let idSupTwo = document.getElementById("SupplementaryTwo");
 
-    idCurrentColor.innerHTML = currentColor.element.colorName;
+    idCurrentColor.innerHTML = currentColor.element.codeName;
     idCurrentColor.style.color = currentColor.element.colorCode;
     //idCurrentColor.style.fontSize = "x-large";
 
-    idCompColor.innerHTML = complementaryColor.element.colorName;
+    idCompColor.innerHTML = complementaryColor.element.codeName;
     idCompColor.style.color = complementaryColor.element.colorCode;
     //idCompColor.style.fontSize = "x-large";
     // Start of Analogous Colors
     document.getElementById("AnalogousColorsNoColor").innerHTML = "The Analogous Colors are: ";
-    idAnalOne.innerHTML = analogousOne.element.colorName;
+    idAnalOne.innerHTML = analogousOne.element.codeName;
     //idAnalOne.style.fontSize = "x-large";
     idAnalOne.style.color = analogousOne.element.colorCode;
 
     document.getElementById("And").innerHTML = " and ";
 
-    idAnalTwo.innerHTML = analogousTwo.element.colorName;
+    idAnalTwo.innerHTML = analogousTwo.element.codeName;
     //idAnalTwo.style.fontSize = "x-large";
     idAnalTwo.style.color = analogousTwo.element.colorCode;
     // End of Analogous Colors
 
     // Start of Triadic Colors
     document.getElementById("TriadicColorsNoColor").innerHTML = "The Triadic Colors are: ";
-    idTriOne.innerHTML = triadicOne.element.colorName;
+    idTriOne.innerHTML = triadicOne.element.codeName;
     //idTriOne.style.fontSize = "x-large";
     idTriOne.style.color = triadicOne.element.colorCode;
 
     document.getElementById("AndTriadic").innerHTML = " and ";
 
-    idTriTwo.innerHTML = triadicTwo.element.colorName;
+    idTriTwo.innerHTML = triadicTwo.element.codeName;
     //idTriTwo.style.fontSize = "x-large";
     idTriTwo.style.color = triadicTwo.element.colorCode;
     // End of Triadic Colors
 
     document.getElementById("SupplementaryColorsNoColor").innerHTML = "The Supplementary Colors are: ";
-    idSupOne.innerHTML = supplementaryOne.element.colorName;
+    idSupOne.innerHTML = supplementaryOne.element.codeName;
 
     idSupOne.style.color = supplementaryOne.element.colorCode;
 
     document.getElementById("AndSupplementary").innerHTML = " and ";
 
-    idSupTwo.innerHTML = supplementaryTwo.element.colorName;
+    idSupTwo.innerHTML = supplementaryTwo.element.codeName;
 
     idSupTwo.style.color = supplementaryTwo.element.colorCode;
 
@@ -297,23 +299,141 @@ let colorName = savedColorArr[1];
 let addCustomColor = function(color) {
     localStorage.setItem(color.colorCode, JSON.stringify(color));
     customWheel.add(color);
+    addToTable(color);
+    lengthOfCustomWheel++;
 }
 
-// TODO: Ensure that the keys that are stored are unique for returning. Make sure duplicate
-// TODO: can't be added.
+// Prints all the saved color information to the console.
 let testAllSavedColors = function() {
+    // Get the keys stored in the local storage
     let keys = Object.keys((localStorage));
+    // Justa  variable for holding the length of our local storage.
     let i = keys.length;
-
+// Using a while loop like this is easier than a for loop in javascript.
     while(i--) {
-        console.log((localStorage.getItem(keys[i])));
+        //console.log((localStorage.getItem(keys[i])));
+        // Converts the stringified JSON back into an object.
+        let customColorToPopulate = JSON.parse(localStorage.getItem(keys[i]));
+        // Adds that object to our custom wheel.
+        customWheel.add(customColorToPopulate);
+        // Logs it to the console. :D
+        console.log("The custom color saved in the CDLL is: " + customColorToPopulate.codeName);
+        lengthOfCustomWheel++;
     }
+
+    currentCustomColor = customWheel.head;
 }
-// Method can be removed once program is working.
+// Running this method writes all the saved variables to the console. Testing purposes only
 testAllSavedColors();
 
+let onAlreadySavedColorClick = function() {
+        console.log(this.innerText);
+        currentCustomColor = customWheel.head;
+        currentCustomColor = customWheel.traverseToByName(this.innerText, currentCustomColor);
+        let idCurrentColor = document.getElementById("ColorToChange");
+        let idCompColor = document.getElementById("Complementary");
+        let idAnalOne = document.getElementById("AnalogousOne");
+        let idAnalTwo = document.getElementById("AnalogousTwo");
+        let idTriOne = document.getElementById("TriadicOne");
+        let idTriTwo = document.getElementById("TriadicTwo");
+        let idSupOne = document.getElementById("SupplementaryOne");
+        let idSupTwo = document.getElementById("SupplementaryTwo");
+
+        idCurrentColor.innerHTML = currentCustomColor.element.codeName;
+        idCurrentColor.style.color = currentCustomColor.element.colorCode;
+        //idCurrentColor.style.fontSize = "x-large";
+
+        idCompColor.innerHTML = currentCustomColor.element.compName;
+        idCompColor.style.color = currentCustomColor.element.compColor;
+        //idCompColor.style.fontSize = "x-large";
+        // Start of Analogous Colors
+        document.getElementById("AnalogousColorsNoColor").innerHTML = "The Analogous Colors are: ";
+        idAnalOne.innerHTML = currentCustomColor.element.analOneName;
+        //idAnalOne.style.fontSize = "x-large";
+        idAnalOne.style.color = currentCustomColor.element.analColorOne;
+
+        document.getElementById("And").innerHTML = " and ";
+
+        idAnalTwo.innerHTML = currentCustomColor.element.analTwoName;
+        //idAnalTwo.style.fontSize = "x-large";
+        idAnalTwo.style.color = currentCustomColor.element.analColorTwo;
+        // End of Analogous Colors
+
+        // Start of Triadic Colors
+        document.getElementById("TriadicColorsNoColor").innerHTML = "The Triadic Colors are: ";
+        idTriOne.innerHTML = currentCustomColor.element.triadicOneName;
+        //idTriOne.style.fontSize = "x-large";
+        idTriOne.style.color = currentCustomColor.element.triadicColorOne;
+
+        document.getElementById("AndTriadic").innerHTML = " and ";
+
+        idTriTwo.innerHTML = currentCustomColor.element.triadicTwoName;
+        //idTriTwo.style.fontSize = "x-large";
+        idTriTwo.style.color = currentCustomColor.element.triadicColorTwo;
+        // End of Triadic Colors
+
+        // Didn't implement supplementary colors just yet. Hol up!
+        document.getElementById("SupplementaryColorsNoColor").innerHTML = "The Supplementary Colors are: ";
+        idSupOne.innerHTML = currentCustomColor.element.suppOneName;
+
+        idSupOne.style.color = currentCustomColor.element.suppColorOne;
+
+        document.getElementById("AndSupplementary").innerHTML = " and ";
+
+        idSupTwo.innerHTML = currentCustomColor.element.suppTwoName;
+
+        idSupTwo.style.color = currentCustomColor.element.suppColorTwo;
+
+        console.log("CLicked a color");
+        console.log("the clicked color was: " + currentCustomColor.element.colorCode);
+}
 
 // Function to populate table.
-let addTableSpot = function(color) {
+let populateTableAtRuntime = function() {
+    let tr;
+    for(let i = 0; i < lengthOfCustomWheel; i++) {
+        let td = document.createElement('td');
+        // This controls the number of elements per row.
+        if(!(i % 5)) {
+            tr = document.createElement('tr');
+            document.getElementById('customColors').appendChild(tr);
+        }
+        td.appendChild(document.createTextNode(currentCustomColor.element.codeName));
+        td.style.color = currentCustomColor.element.colorCode;
+        td.style.padding = '15px';
+        tr.appendChild(td);
+        td.addEventListener('click', onAlreadySavedColorClick);
+        currentCustomColor = customWheel.skipForwards(currentCustomColor);
+    }
 
 }
+
+
+
+let addToTable = function(color) {
+    let table = document.getElementById('customColors');
+    let tr = table.rows[ table.rows.length - 1 ];
+    for(let i = 0; i <= lengthOfCustomWheel; i++) {
+        if(i < lengthOfCustomWheel) {
+
+        } else {
+
+            let td = document.createElement('td');
+            if(!(i % 5)) {
+                tr = document.createElement('tr');
+                document.getElementById('customColors').appendChild(tr);
+            }
+            td.appendChild(document.createTextNode(color.codeName));
+            td.style.color = color.colorCode;
+            td.style.textAlign = 'center';
+            td.style.padding = '15px';
+            tr.appendChild(td);
+            td.addEventListener('click', onAlreadySavedColorClick);
+        }
+
+    }
+
+
+}
+
+populateTableAtRuntime();
