@@ -4,12 +4,6 @@ document.querySelector('#ColorSelector').jscolor <-- Gets the jscolor instance f
  */
 
 
-/*
-
-Well  you can store information in local storage which means I don't need to use JSON files lmaoooo.
-Gonna get on that ASAP
- */
-
 let wheel = new circularLinkedListClass();
 // Currently Unused CDLL for custom colors.
 // TODO: IMPLEMENT THE GODDAMN CUSTOM COLOR CDLL FFS
@@ -52,8 +46,7 @@ class BaseColor {
     }
 }
 
-// THIS IS **NOT** all of the colors nor are they correct. This is just a sample
-// CDLL I made up to test the CDLL functions. Similar in Syntax to Java Implementation
+//O(1) time for inserting all of the RYB colors we have on our color wheel. Fancy.
 wheel.add(new BaseColor("Red Orange", "#FD5308"));
 wheel.add(new BaseColor("Orange", "#FB9902"));
 wheel.add(new BaseColor("Light Orange", "#F9BC02"));
@@ -70,16 +63,16 @@ wheel.add(new BaseColor("Red", "#FE2712"));
 // Initialize all of the colors so they aren't sitting at null.
 let currentColor = wheel.head;
 let complementaryColor = wheel.traverseTo(6, currentColor);
-let analogousOne = wheel.traverseTo(1,currentColor);
-let analogousTwo = wheel.traverseTo(-1,currentColor);
-let triadicOne = wheel.traverseTo(4,currentColor);
-let triadicTwo = wheel.traverseTo(-4,currentColor);
-let supplementaryOne = wheel.traverseTo(3,currentColor);
-let supplementaryTwo = wheel.traverseTo(-3,currentColor);
+let analogousOne = wheel.traverseTo(1, currentColor);
+let analogousTwo = wheel.traverseTo(-1, currentColor);
+let triadicOne = wheel.traverseTo(4, currentColor);
+let triadicTwo = wheel.traverseTo(-4, currentColor);
+let supplementaryOne = wheel.traverseTo(3, currentColor);
+let supplementaryTwo = wheel.traverseTo(-3, currentColor);
 
 // On Click functionality for our buttons.
 // Color name is passed from HTML, used to traverse the CDLL, and display the colors to the user.
-let onColorClick = function(colorName) {
+let onColorClick = function (colorName) {
     // console Log for viewing the color name. Testing Purposes.
     console.log(colorName);
     // Set the colors to the appropriate ones
@@ -97,16 +90,16 @@ let onColorClick = function(colorName) {
     analogousTwo = wheel.traverseTo(-1, currentColor);
     let idAnalTwo = document.getElementById("AnalogousTwo");
 
-    triadicOne = wheel.traverseTo(4,currentColor);
+    triadicOne = wheel.traverseTo(4, currentColor);
     let idTriOne = document.getElementById("TriadicOne");
 
-    triadicTwo = wheel.traverseTo(-4,currentColor);
+    triadicTwo = wheel.traverseTo(-4, currentColor);
     let idTriTwo = document.getElementById("TriadicTwo");
 
-    supplementaryOne = wheel.traverseTo(3,currentColor);
+    supplementaryOne = wheel.traverseTo(3, currentColor);
     let idSupOne = document.getElementById("SupplementaryOne");
 
-    supplementaryTwo = wheel.traverseTo(-3,currentColor);
+    supplementaryTwo = wheel.traverseTo(-3, currentColor);
     let idSupTwo = document.getElementById("SupplementaryTwo");
 
     idCurrentColor.innerHTML = currentColor.element.codeName;
@@ -155,16 +148,16 @@ let onColorClick = function(colorName) {
 
 }
 
-let onSaveColorClick = function() {
+let onSaveColorClick = function () {
     // This variable holds the hex value of whatever the color selection is atm.
     let savedColor = document.querySelector('#ColorSelector').jscolor.toHEXString();
     // Testing Log
     console.log("The chosen color is: " + savedColor);
     // We DON'T proceed if the color is pure white or pure black.
-    if(savedColor.valueOf() == "#FFFFFF") {
+    if (savedColor.valueOf() == "#FFFFFF") {
         localStorage.clear();
         console.log("Cannot Save Pure White cuz that shit is pasttyyyyyy");
-    } else if(savedColor.valueOf() == "#000000") {
+    } else if (savedColor.valueOf() == "#000000") {
         console.log("Cannot Save Pure Black")
         // Here we do proceed.
     } else {
@@ -178,7 +171,7 @@ let onSaveColorClick = function() {
         let suppColorTwo = tinycolor(savedColor).spin(-90).toHexString();
 
         // define a new color and add it to OUR wheel of fortune. (But we don't add it yet)
-        let colorToAdd = getColorNames(savedColor,compColor, triadicColorOne, triadicColorTwo, analColorOne, analColorTwo, suppColorOne, suppColorTwo);
+        let colorToAdd = getColorNames(savedColor, compColor, triadicColorOne, triadicColorTwo, analColorOne, analColorTwo, suppColorOne, suppColorTwo);
         addCustomColor(colorToAdd);
 
         // Log the color's information because we gotta make sure it's working, yessirrrrr
@@ -247,25 +240,23 @@ let onSaveColorClick = function() {
         idSupTwo.style.color = colorToAdd.suppColorTwo;
 
 
-
-
     } //Don't be confused, this is the end of the else statement.
 } // Thiiiiis one is the end of the function \o/
 
 // This method creates and returns a color object with the color names included. Pretty sick huh? (KILL ME THIS WAS AWFUL
 // TO MAKE)
-let getColorNames = function(savedColor, compColor, triadicColorOne, triadicColorTwo, analColorOne, analColorTwo, suppColorOne, suppColorTwo) {
-/*
-Quick Rundown of how this syntax works rq by using the first one as an example:
-let savedColorArr = ntc.name(savedColor);
-^ this is an array.   ^ ntc.name takes the savedColor (or the selectedColor) and finds its closest match in a database of names.
-                        It returns an array with that looks like: {"Input Color", "Closest Match Name", "Exact Match RGBA"}
+let getColorNames = function (savedColor, compColor, triadicColorOne, triadicColorTwo, analColorOne, analColorTwo, suppColorOne, suppColorTwo) {
+    /*
+    Quick Rundown of how this syntax works rq by using the first one as an example:
+    let savedColorArr = ntc.name(savedColor);
+    ^ this is an array.   ^ ntc.name takes the savedColor (or the selectedColor) and finds its closest match in a database of names.
+                            It returns an array with that looks like: {"Input Color", "Closest Match Name", "Exact Match RGBA"}
 
-let colorName = savedColorArr[1];
-                 ^ This is the "Closest Match Name" mentioned above. That's how I am getting the color names. :)
+    let colorName = savedColorArr[1];
+                     ^ This is the "Closest Match Name" mentioned above. That's how I am getting the color names. :)
 
- Then it's just rinse and repeat!
- */
+     Then it's just rinse and repeat!
+     */
     let savedColorarr = ntc.name(savedColor);
     let colorName = savedColorarr[1];
 
@@ -292,11 +283,11 @@ let colorName = savedColorArr[1];
 
 // Here we return the super long custom color object.
     return new CustomColor(savedColor, compColor, triadicColorOne, triadicColorTwo, analColorOne, analColorTwo, suppColorOne, suppColorTwo,
-                            colorName, compName, triadicOneName, triadicTwoName, analOneName, analTwoName, suppOneName, suppTwoName);
+        colorName, compName, triadicOneName, triadicTwoName, analOneName, analTwoName, suppOneName, suppTwoName);
 }
 
 // This just populates shit. // LOCAL STORAGE WORKS IN CHROME.
-let addCustomColor = function(color) {
+let addCustomColor = function (color) {
     localStorage.setItem(color.colorCode, JSON.stringify(color));
     customWheel.add(color);
     addToTable(color);
@@ -304,13 +295,13 @@ let addCustomColor = function(color) {
 }
 
 // Prints all the saved color information to the console.
-let testAllSavedColors = function() {
+let testAllSavedColors = function () {
     // Get the keys stored in the local storage
     let keys = Object.keys((localStorage));
-    // Justa  variable for holding the length of our local storage.
+    // Just a variable for holding the length of our local storage.
     let i = keys.length;
 // Using a while loop like this is easier than a for loop in javascript.
-    while(i--) {
+    while (i--) {
         //console.log((localStorage.getItem(keys[i])));
         // Converts the stringified JSON back into an object.
         let customColorToPopulate = JSON.parse(localStorage.getItem(keys[i]));
@@ -326,100 +317,118 @@ let testAllSavedColors = function() {
 // Running this method writes all the saved variables to the console. Testing purposes only
 testAllSavedColors();
 
-let onAlreadySavedColorClick = function() {
-        console.log(this.innerText);
-        currentCustomColor = customWheel.head;
-        currentCustomColor = customWheel.traverseToByName(this.innerText, currentCustomColor);
-        let idCurrentColor = document.getElementById("ColorToChange");
-        let idCompColor = document.getElementById("Complementary");
-        let idAnalOne = document.getElementById("AnalogousOne");
-        let idAnalTwo = document.getElementById("AnalogousTwo");
-        let idTriOne = document.getElementById("TriadicOne");
-        let idTriTwo = document.getElementById("TriadicTwo");
-        let idSupOne = document.getElementById("SupplementaryOne");
-        let idSupTwo = document.getElementById("SupplementaryTwo");
+let onAlreadySavedColorClick = function () {
+    // Test Log
+    console.log(this.innerText);
+    // Here we set the current custom color node to the head. Then we traverse it from there.
+    currentCustomColor = customWheel.head;
+    currentCustomColor = customWheel.traverseToByName(this.innerText, currentCustomColor);
 
-        idCurrentColor.innerHTML = currentCustomColor.element.codeName;
-        idCurrentColor.style.color = currentCustomColor.element.colorCode;
-        //idCurrentColor.style.fontSize = "x-large";
+    // What follows is a copy / paste of our other onClick methods before for the custom color node.
+    // It's important to note that our nodes in this CDLL implementation are generic. Some of the
+    // items in the customWheel CDLL are JSON objects and some are color objects.
+    let idCurrentColor = document.getElementById("ColorToChange");
+    let idCompColor = document.getElementById("Complementary");
+    let idAnalOne = document.getElementById("AnalogousOne");
+    let idAnalTwo = document.getElementById("AnalogousTwo");
+    let idTriOne = document.getElementById("TriadicOne");
+    let idTriTwo = document.getElementById("TriadicTwo");
+    let idSupOne = document.getElementById("SupplementaryOne");
+    let idSupTwo = document.getElementById("SupplementaryTwo");
 
-        idCompColor.innerHTML = currentCustomColor.element.compName;
-        idCompColor.style.color = currentCustomColor.element.compColor;
-        //idCompColor.style.fontSize = "x-large";
-        // Start of Analogous Colors
-        document.getElementById("AnalogousColorsNoColor").innerHTML = "The Analogous Colors are: ";
-        idAnalOne.innerHTML = currentCustomColor.element.analOneName;
-        //idAnalOne.style.fontSize = "x-large";
-        idAnalOne.style.color = currentCustomColor.element.analColorOne;
+    idCurrentColor.innerHTML = currentCustomColor.element.codeName;
+    idCurrentColor.style.color = currentCustomColor.element.colorCode;
+    //idCurrentColor.style.fontSize = "x-large";
 
-        document.getElementById("And").innerHTML = " and ";
+    idCompColor.innerHTML = currentCustomColor.element.compName;
+    idCompColor.style.color = currentCustomColor.element.compColor;
+    //idCompColor.style.fontSize = "x-large";
+    // Start of Analogous Colors
+    document.getElementById("AnalogousColorsNoColor").innerHTML = "The Analogous Colors are: ";
+    idAnalOne.innerHTML = currentCustomColor.element.analOneName;
+    //idAnalOne.style.fontSize = "x-large";
+    idAnalOne.style.color = currentCustomColor.element.analColorOne;
 
-        idAnalTwo.innerHTML = currentCustomColor.element.analTwoName;
-        //idAnalTwo.style.fontSize = "x-large";
-        idAnalTwo.style.color = currentCustomColor.element.analColorTwo;
-        // End of Analogous Colors
+    document.getElementById("And").innerHTML = " and ";
 
-        // Start of Triadic Colors
-        document.getElementById("TriadicColorsNoColor").innerHTML = "The Triadic Colors are: ";
-        idTriOne.innerHTML = currentCustomColor.element.triadicOneName;
-        //idTriOne.style.fontSize = "x-large";
-        idTriOne.style.color = currentCustomColor.element.triadicColorOne;
+    idAnalTwo.innerHTML = currentCustomColor.element.analTwoName;
+    //idAnalTwo.style.fontSize = "x-large";
+    idAnalTwo.style.color = currentCustomColor.element.analColorTwo;
+    // End of Analogous Colors
 
-        document.getElementById("AndTriadic").innerHTML = " and ";
+    // Start of Triadic Colors
+    document.getElementById("TriadicColorsNoColor").innerHTML = "The Triadic Colors are: ";
+    idTriOne.innerHTML = currentCustomColor.element.triadicOneName;
+    //idTriOne.style.fontSize = "x-large";
+    idTriOne.style.color = currentCustomColor.element.triadicColorOne;
 
-        idTriTwo.innerHTML = currentCustomColor.element.triadicTwoName;
-        //idTriTwo.style.fontSize = "x-large";
-        idTriTwo.style.color = currentCustomColor.element.triadicColorTwo;
-        // End of Triadic Colors
+    document.getElementById("AndTriadic").innerHTML = " and ";
 
-        // Didn't implement supplementary colors just yet. Hol up!
-        document.getElementById("SupplementaryColorsNoColor").innerHTML = "The Supplementary Colors are: ";
-        idSupOne.innerHTML = currentCustomColor.element.suppOneName;
+    idTriTwo.innerHTML = currentCustomColor.element.triadicTwoName;
+    //idTriTwo.style.fontSize = "x-large";
+    idTriTwo.style.color = currentCustomColor.element.triadicColorTwo;
+    // End of Triadic Colors
 
-        idSupOne.style.color = currentCustomColor.element.suppColorOne;
+    // Didn't implement supplementary colors just yet. Hol up!
+    document.getElementById("SupplementaryColorsNoColor").innerHTML = "The Supplementary Colors are: ";
+    idSupOne.innerHTML = currentCustomColor.element.suppOneName;
 
-        document.getElementById("AndSupplementary").innerHTML = " and ";
+    idSupOne.style.color = currentCustomColor.element.suppColorOne;
 
-        idSupTwo.innerHTML = currentCustomColor.element.suppTwoName;
+    document.getElementById("AndSupplementary").innerHTML = " and ";
 
-        idSupTwo.style.color = currentCustomColor.element.suppColorTwo;
+    idSupTwo.innerHTML = currentCustomColor.element.suppTwoName;
 
-        console.log("CLicked a color");
-        console.log("the clicked color was: " + currentCustomColor.element.colorCode);
+    idSupTwo.style.color = currentCustomColor.element.suppColorTwo;
+
+    console.log("CLicked a color");
+    console.log("the clicked color was: " + currentCustomColor.element.colorCode);
 }
 
 // Function to populate table.
-let populateTableAtRuntime = function() {
+let populateTableAtRuntime = function () {
+    // Declare the table row variable.
+    // No need to initialize it because it'll be initialized every FIVE colors to make a new row.
     let tr;
-    for(let i = 0; i < lengthOfCustomWheel; i++) {
+    // The table will be the same length of the custom wheel, so we can populate it using this variable.
+    for (let i = 0; i < lengthOfCustomWheel; i++) {
+        // Here we create a table entry.
         let td = document.createElement('td');
         // This controls the number of elements per row.
-        if(!(i % 5)) {
+        if (!(i % 5)) {
+            // If this operation is false, we create a new table before adding more td's.
             tr = document.createElement('tr');
             document.getElementById('customColors').appendChild(tr);
         }
+        // The proceeding code appends a text node to our td and styles it a bit.
         td.appendChild(document.createTextNode(currentCustomColor.element.codeName));
         td.style.color = currentCustomColor.element.colorCode;
         td.style.padding = '15px';
+        // This line adds the td to the tr (table div to the table row)
         tr.appendChild(td);
+        // They also need an on click listener. That's added below.
         td.addEventListener('click', onAlreadySavedColorClick);
+        // Since we're populating the whole table right now, we need to skip to the next node for the next iteration.
         currentCustomColor = customWheel.skipForwards(currentCustomColor);
     }
 
 }
 
-
-
-let addToTable = function(color) {
+// This method is called when we need to dynamically add a new color to our table.
+// This method is separate from our initial table population method despite it being almost the same.
+// the biggest difference is we need to declare our 'tr' variable before we proceed with the rest of the function.
+let addToTable = function (color) {
     let table = document.getElementById('customColors');
-    let tr = table.rows[ table.rows.length - 1 ];
-    for(let i = 0; i <= lengthOfCustomWheel; i++) {
-        if(i < lengthOfCustomWheel) {
-
+    let tr = table.rows[table.rows.length - 1];
+    // Notice the '<=' operator. Since the lengthOfCustomWheel variable is just an int,
+    // we use it to place the new color in the table dynamically.
+    for (let i = 0; i <= lengthOfCustomWheel; i++) {
+        if (i < lengthOfCustomWheel) {
+            // We do nothing here.
         } else {
-
+            // This code is very similar to the above population method.
             let td = document.createElement('td');
-            if(!(i % 5)) {
+            if (!(i % 5)) {
                 tr = document.createElement('tr');
                 document.getElementById('customColors').appendChild(tr);
             }
@@ -435,5 +444,5 @@ let addToTable = function(color) {
 
 
 }
-
+// This is the method that populates the table at runtime.
 populateTableAtRuntime();
