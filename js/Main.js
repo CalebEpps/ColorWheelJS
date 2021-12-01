@@ -40,8 +40,8 @@ class CustomColor {
 
 
 class BaseColor {
-    constructor(colorName, colorCode) {
-        this.codeName = colorName;
+    constructor(codeName, colorCode) {
+        this.codeName = codeName;
         this.colorCode = colorCode;
     }
 }
@@ -69,6 +69,17 @@ let triadicOne = wheel.traverseTo(4, currentColor);
 let triadicTwo = wheel.traverseTo(-4, currentColor);
 let supplementaryOne = wheel.traverseTo(3, currentColor);
 let supplementaryTwo = wheel.traverseTo(-3, currentColor);
+
+let getHREFLink = function(inputNode){
+    let textColorToSearch = inputNode.element.codeName;
+    let str = "<a style='color:" + inputNode.element.colorCode + "; text-decoration: none;' href='https://www.google.com/search?q=" + textColorToSearch + "+" + "shirt' target='_blank'>" + textColorToSearch;
+    return str;
+}
+
+let getHREFLinkSP = function(colorToSearch, colorCode){
+    let str = "<a style='color:" + colorCode + "; text-decoration: none;' href='https://www.google.com/search?q=" + colorToSearch + "+" + "shirt' target='_blank'>" + colorToSearch;
+    return str;
+}
 
 // On Click functionality for our buttons.
 // Color name is passed from HTML, used to traverse the CDLL, and display the colors to the user.
@@ -102,47 +113,49 @@ let onColorClick = function (colorName) {
     supplementaryTwo = wheel.traverseTo(-3, currentColor);
     let idSupTwo = document.getElementById("SupplementaryTwo");
 
-    idCurrentColor.innerHTML = currentColor.element.codeName;
+    document.getElementById("ColorToChangeNoColor").innerHTML = "The current color is:";
+    idCurrentColor.innerHTML = getHREFLink(currentColor);
     idCurrentColor.style.color = currentColor.element.colorCode;
     //idCurrentColor.style.fontSize = "x-large";
 
-    idCompColor.innerHTML = complementaryColor.element.codeName;
+    document.getElementById("ComplementaryNoChange").innerHTML = "The complementary color is:";
+    idCompColor.innerHTML = getHREFLink(complementaryColor);
     idCompColor.style.color = complementaryColor.element.colorCode;
     //idCompColor.style.fontSize = "x-large";
     // Start of Analogous Colors
     document.getElementById("AnalogousColorsNoColor").innerHTML = "The Analogous Colors are: ";
-    idAnalOne.innerHTML = analogousOne.element.codeName;
+    idAnalOne.innerHTML = getHREFLink(analogousOne);
     //idAnalOne.style.fontSize = "x-large";
     idAnalOne.style.color = analogousOne.element.colorCode;
 
     document.getElementById("And").innerHTML = " and ";
 
-    idAnalTwo.innerHTML = analogousTwo.element.codeName;
+    idAnalTwo.innerHTML = getHREFLink(analogousTwo);
     //idAnalTwo.style.fontSize = "x-large";
     idAnalTwo.style.color = analogousTwo.element.colorCode;
     // End of Analogous Colors
 
     // Start of Triadic Colors
     document.getElementById("TriadicColorsNoColor").innerHTML = "The Triadic Colors are: ";
-    idTriOne.innerHTML = triadicOne.element.codeName;
+    idTriOne.innerHTML = getHREFLink(triadicOne);
     //idTriOne.style.fontSize = "x-large";
     idTriOne.style.color = triadicOne.element.colorCode;
 
     document.getElementById("AndTriadic").innerHTML = " and ";
 
-    idTriTwo.innerHTML = triadicTwo.element.codeName;
+    idTriTwo.innerHTML = getHREFLink(triadicTwo);
     //idTriTwo.style.fontSize = "x-large";
     idTriTwo.style.color = triadicTwo.element.colorCode;
     // End of Triadic Colors
 
     document.getElementById("SupplementaryColorsNoColor").innerHTML = "The Supplementary Colors are: ";
-    idSupOne.innerHTML = supplementaryOne.element.codeName;
+    idSupOne.innerHTML = getHREFLink(supplementaryOne);
 
     idSupOne.style.color = supplementaryOne.element.colorCode;
 
     document.getElementById("AndSupplementary").innerHTML = " and ";
 
-    idSupTwo.innerHTML = supplementaryTwo.element.codeName;
+    idSupTwo.innerHTML = getHREFLink(supplementaryTwo);
 
     idSupTwo.style.color = supplementaryTwo.element.colorCode;
 
@@ -194,52 +207,48 @@ let onSaveColorClick = function () {
         let idSupOne = document.getElementById("SupplementaryOne");
         let idSupTwo = document.getElementById("SupplementaryTwo");
 
-        idCurrentColor.innerHTML = colorToAdd.codeName;
-        idCurrentColor.style.color = colorToAdd.colorCode;
+        document.getElementById("ColorToChangeNoColor").innerHTML = "The current color is:";
+        idCurrentColor.innerHTML = getHREFLinkSP(colorToAdd.codeName, colorToAdd.colorCode);
+        //idCurrentColor.innerHTML = colorToAdd.codeName;
+        //idCurrentColor.style.color = colorToAdd.colorCode;
         //idCurrentColor.style.fontSize = "x-large";
 
-        idCompColor.innerHTML = colorToAdd.compName;
-        idCompColor.style.color = colorToAdd.compColor;
+        document.getElementById("ComplementaryNoChange").innerHTML = "The complementary color is:";
+        idCompColor.innerHTML = getHREFLinkSP(colorToAdd.compName, colorToAdd.compColor);
+        //idCompColor.style.color = colorToAdd.compColor;
         //idCompColor.style.fontSize = "x-large";
         // Start of Analogous Colors
         document.getElementById("AnalogousColorsNoColor").innerHTML = "The Analogous Colors are: ";
-        idAnalOne.innerHTML = colorToAdd.analOneName;
+        idAnalOne.innerHTML = getHREFLinkSP(colorToAdd.analOneName, colorToAdd.analColorOne);
         //idAnalOne.style.fontSize = "x-large";
-        idAnalOne.style.color = colorToAdd.analColorOne;
+        //idAnalOne.style.color = colorToAdd.analColorOne;
 
         document.getElementById("And").innerHTML = " and ";
 
-        idAnalTwo.innerHTML = colorToAdd.analTwoName;
+        idAnalTwo.innerHTML = getHREFLinkSP(colorToAdd.analTwoName, colorToAdd.analColorTwo);
         //idAnalTwo.style.fontSize = "x-large";
-        idAnalTwo.style.color = colorToAdd.analColorTwo;
+        //idAnalTwo.style.color = colorToAdd.analColorTwo;
         // End of Analogous Colors
 
         // Start of Triadic Colors
         document.getElementById("TriadicColorsNoColor").innerHTML = "The Triadic Colors are: ";
-        idTriOne.innerHTML = colorToAdd.triadicOneName;
+        idTriOne.innerHTML = getHREFLinkSP(colorToAdd.triadicOneName, colorToAdd.triadicColorOne);
         //idTriOne.style.fontSize = "x-large";
-        idTriOne.style.color = colorToAdd.triadicColorOne;
+        //idTriOne.style.color = colorToAdd.triadicColorOne;
 
         document.getElementById("AndTriadic").innerHTML = " and ";
 
-        idTriTwo.innerHTML = colorToAdd.triadicTwoName;
+        idTriTwo.innerHTML = getHREFLinkSP(colorToAdd.triadicTwoName, colorToAdd.triadicColorTwo);
         //idTriTwo.style.fontSize = "x-large";
-        idTriTwo.style.color = colorToAdd.triadicColorTwo;
+        //idTriTwo.style.color = colorToAdd.triadicColorTwo;
         // End of Triadic Colors
 
         // Didn't implement supplementary colors just yet. Hol up!
         document.getElementById("SupplementaryColorsNoColor").innerHTML = "The Supplementary Colors are: ";
-        idSupOne.innerHTML = colorToAdd.suppOneName;
-
-        idSupOne.style.color = colorToAdd.suppColorOne;
+        idSupOne.innerHTML = getHREFLinkSP(colorToAdd.suppOneName, colorToAdd.suppColorOne);
 
         document.getElementById("AndSupplementary").innerHTML = " and ";
-
-        idSupTwo.innerHTML = colorToAdd.suppTwoName;
-
-        idSupTwo.style.color = colorToAdd.suppColorTwo;
-
-
+        idSupTwo.innerHTML = getHREFLinkSP(colorToAdd.suppTwoName, colorToAdd.suppColorTwo);
     } //Don't be confused, this is the end of the else statement.
 } // Thiiiiis one is the end of the function \o/
 
@@ -336,50 +345,58 @@ let onAlreadySavedColorClick = function () {
     let idSupOne = document.getElementById("SupplementaryOne");
     let idSupTwo = document.getElementById("SupplementaryTwo");
 
-    idCurrentColor.innerHTML = currentCustomColor.element.codeName;
-    idCurrentColor.style.color = currentCustomColor.element.colorCode;
+    idCurrentColor.innerHTML = getHREFLinkSP(currentCustomColor.element.codeName, currentCustomColor.element.colorCode);
+    //idCurrentColor.innerHTML = currentCustomColor.element.codeName;
+    //idCurrentColor.style.color = currentCustomColor.element.colorCode;
     //idCurrentColor.style.fontSize = "x-large";
 
-    idCompColor.innerHTML = currentCustomColor.element.compName;
-    idCompColor.style.color = currentCustomColor.element.compColor;
+    idCompColor.innerHTML = getHREFLinkSP(currentCustomColor.element.compName, currentCustomColor.element.compColor);
+    //idCompColor.innerHTML = currentCustomColor.element.compName;
+    //idCompColor.style.color = currentCustomColor.element.compColor;
     //idCompColor.style.fontSize = "x-large";
     // Start of Analogous Colors
     document.getElementById("AnalogousColorsNoColor").innerHTML = "The Analogous Colors are: ";
-    idAnalOne.innerHTML = currentCustomColor.element.analOneName;
+    idAnalOne.innerHTML = getHREFLinkSP(currentCustomColor.element.analOneName, currentCustomColor.element.analColorOne);
+    //idAnalOne.innerHTML = currentCustomColor.element.analOneName;
     //idAnalOne.style.fontSize = "x-large";
-    idAnalOne.style.color = currentCustomColor.element.analColorOne;
+    //idAnalOne.style.color = currentCustomColor.element.analColorOne;
 
     document.getElementById("And").innerHTML = " and ";
-
-    idAnalTwo.innerHTML = currentCustomColor.element.analTwoName;
+    idAnalTwo.innerHTML = getHREF(currentCustomColor.element.analTwoName, currentCustomColor.element.analColorTwo);
+    //idAnalTwo.innerHTML = currentCustomColor.element.analTwoName;
     //idAnalTwo.style.fontSize = "x-large";
-    idAnalTwo.style.color = currentCustomColor.element.analColorTwo;
+    //idAnalTwo.style.color = currentCustomColor.element.analColorTwo;
     // End of Analogous Colors
 
     // Start of Triadic Colors
     document.getElementById("TriadicColorsNoColor").innerHTML = "The Triadic Colors are: ";
-    idTriOne.innerHTML = currentCustomColor.element.triadicOneName;
+
+    idTriOne.innerHTML = getHREFLinkSP(currentCustomColor.element.triadicOneName, currentCustomColor.element.triadicColorOne);
+    //idTriOne.innerHTML = currentCustomColor.element.triadicOneName;
     //idTriOne.style.fontSize = "x-large";
-    idTriOne.style.color = currentCustomColor.element.triadicColorOne;
+    //idTriOne.style.color = currentCustomColor.element.triadicColorOne;
 
     document.getElementById("AndTriadic").innerHTML = " and ";
-
-    idTriTwo.innerHTML = currentCustomColor.element.triadicTwoName;
+    idTriTwo.innerHTML = getHREFLinkSP(currentCustomColor.element.triadicTwoName, currentCustomColor.element.triadicColorTwo);
+    //idTriTwo.innerHTML = currentCustomColor.element.triadicTwoName;
     //idTriTwo.style.fontSize = "x-large";
-    idTriTwo.style.color = currentCustomColor.element.triadicColorTwo;
+    //idTriTwo.style.color = currentCustomColor.element.triadicColorTwo;
     // End of Triadic Colors
 
     // Didn't implement supplementary colors just yet. Hol up!
     document.getElementById("SupplementaryColorsNoColor").innerHTML = "The Supplementary Colors are: ";
-    idSupOne.innerHTML = currentCustomColor.element.suppOneName;
 
-    idSupOne.style.color = currentCustomColor.element.suppColorOne;
+    idSupOne.innerHTML = getHREFLinkSP(currentCustomColor.element.suppOneName, currentCustomColor.element.suppColorOne);
+    //idSupOne.innerHTML = currentCustomColor.element.suppOneName;
+
+    //idSupOne.style.color = currentCustomColor.element.suppColorOne;
 
     document.getElementById("AndSupplementary").innerHTML = " and ";
 
-    idSupTwo.innerHTML = currentCustomColor.element.suppTwoName;
+    idSupTwo.innerHTML = getHREFLinkSP(currentCustomColor.element.suppTwoName, currentCustomColor.element.suppColorTwo);
+    //idSupTwo.innerHTML = currentCustomColor.element.suppTwoName;
 
-    idSupTwo.style.color = currentCustomColor.element.suppColorTwo;
+    //idSupTwo.style.color = currentCustomColor.element.suppColorTwo;
 
     console.log("CLicked a color");
     console.log("the clicked color was: " + currentCustomColor.element.colorCode);
@@ -395,7 +412,7 @@ let populateTableAtRuntime = function () {
         // Here we create a table entry.
         let td = document.createElement('td');
         // This controls the number of elements per row.
-        if (!(i % 5)) {
+        if (!(i % 7)) {
             // If this operation is false, we create a new table before adding more td's.
             tr = document.createElement('tr');
             document.getElementById('customColors').appendChild(tr);
@@ -404,6 +421,7 @@ let populateTableAtRuntime = function () {
         td.appendChild(document.createTextNode(currentCustomColor.element.codeName));
         td.style.color = currentCustomColor.element.colorCode;
         td.style.padding = '15px';
+        td.style.backgroundColor = currentCustomColor.element.colorCode;
         // This line adds the td to the tr (table div to the table row)
         tr.appendChild(td);
         // They also need an on click listener. That's added below.
@@ -428,7 +446,7 @@ let addToTable = function (color) {
         } else {
             // This code is very similar to the above population method.
             let td = document.createElement('td');
-            if (!(i % 5)) {
+            if (!(i % 7)) {
                 tr = document.createElement('tr');
                 document.getElementById('customColors').appendChild(tr);
             }
@@ -436,6 +454,7 @@ let addToTable = function (color) {
             td.style.color = color.colorCode;
             td.style.textAlign = 'center';
             td.style.padding = '15px';
+            td.style.backgroundColor = color.colorCode;
             tr.appendChild(td);
             td.addEventListener('click', onAlreadySavedColorClick);
         }
