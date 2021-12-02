@@ -11,30 +11,60 @@ let currentCustomColor;
 
 
 class CustomColor {
-    constructor(colorCode, compColor, triadicColorOne, triadicColorTwo, analColorOne, analColorTwo, suppColorOne, suppColorTwo,
-                codeName, compName, triadicOneName, triadicTwoName, analOneName, analTwoName, suppOneName, suppTwoName) {
+
+
+    constructor(colorCode) {
+
+        let createPartnerColor = function(spinInt) {
+            return tinycolor(colorCode).spin(spinInt).toHexString();
+        }
+
+        let getColorName = function(colorToName) {
+            let colorToNameArr = ntc.name(colorToName);
+            return colorToNameArr[1];
+        }
+
+        let compColor;
+        let triadicColorOne;
+        let TriadicColorTwo;
+        let analColorOne;
+        let analColorTwo;
+        let suppColorOne;
+        let suppColorTwo;
+
+        let codeName;
+        let compName;
+        let triadicOneName;
+        let triadicTwoName;
+        let analOneName;
+        let analTwoName;
+        let suppOneName;
+        let suppTwoName;
 
         // These are the hex values of the saved color
         this.colorCode = colorCode;
-        this.compColor = compColor;
-        this.triadicColorOne = triadicColorOne;
-        this.triadicColorTwo = triadicColorTwo;
-        this.analColorOne = analColorOne;
-        this.analColorTwo = analColorTwo;
-        this.suppColorOne = suppColorOne;
-        this.suppColorTwo = suppColorTwo;
+        this.compColor = createPartnerColor(180);
+        this.triadicColorOne = createPartnerColor(120);
+        this.triadicColorTwo = createPartnerColor(-120);
+        this.analColorOne = createPartnerColor(35);
+        this.analColorTwo = createPartnerColor(-35);
+        this.suppColorOne = createPartnerColor(90);
+        this.suppColorTwo = createPartnerColor(-90);
 
         // These are the saved corresponding color names
-        this.codeName = codeName;
-        this.compName = compName;
-        this.triadicOneName = triadicOneName;
-        this.triadicTwoName = triadicTwoName;
-        this.analOneName = analOneName;
-        this.analTwoName = analTwoName;
-        this.suppOneName = suppOneName;
-        this.suppTwoName = suppTwoName;
+        this.codeName = getColorName(this.colorCode);
+        this.compName = getColorName(this.compColor);
+        this.triadicOneName = getColorName(this.triadicColorOne);
+        this.triadicTwoName = getColorName(this.triadicColorTwo);
+        this.analOneName = getColorName(this.analColorOne);
+        this.analTwoName = getColorName(this.analColorTwo);
+        this.suppOneName = getColorName(this.suppColorOne);
+        this.suppTwoName = getColorName(this.suppColorTwo);
     }
 }
+
+
+
 
 
 class BaseColor {
@@ -68,14 +98,22 @@ let triadicTwo = wheel.traverseTo(-4, currentColor);
 let supplementaryOne = wheel.traverseTo(3, currentColor);
 let supplementaryTwo = wheel.traverseTo(-3, currentColor);
 
+
+
 let getHREFLink = function(inputNode){
     let textColorToSearch = inputNode.element.codeName;
-    let str = "<a style='color:" + inputNode.element.colorCode + "; text-decoration: none;' href='https://www.google.com/search?q=" + textColorToSearch + "+" + "shirt' target='_blank'>" + textColorToSearch;
+    let dropdown = document.getElementById('clothingArticle');
+    let selectedClothing = dropdown.options[dropdown.selectedIndex].text;
+    console.log(selectedClothing);
+    let str = "<a style='color:" + inputNode.element.colorCode + "; text-decoration: none;' href='https://www.google.com/search?q=" + textColorToSearch + "+" + selectedClothing + "' target='_blank'>" + textColorToSearch;
     return str;
 }
 
 let getHREFLinkSP = function(colorToSearch, colorCode){
-    let str = "<a style='color:" + colorCode + "; text-decoration: none;' href='https://www.google.com/search?q=" + colorToSearch + "+" + "shirt' target='_blank'>" + colorToSearch;
+    let dropdown = document.getElementById('clothingArticle');
+    let selectedClothing = dropdown.options[dropdown.selectedIndex].text;
+    console.log(selectedClothing);
+    let str = "<a style='color:" + colorCode + "; text-decoration: none;' href='https://www.google.com/search?q=" + colorToSearch + "+" + selectedClothing + "' target='_blank'>" + colorToSearch;
     return str;
 }
 
@@ -144,25 +182,8 @@ let onColorClick = function (colorName) {
 let onSaveColorClick = function () {
     // This variable holds the hex value of whatever the color selection is atm.
     let savedColor = document.querySelector('#ColorSelector').jscolor.toHEXString();
-    // We DON'T proceed if the color is pure white or pure black.
-    if (savedColor.valueOf() == "#FFFFFF") {
-        localStorage.clear();
-        console.log("Cannot Save Pure White cuz that shit is pasttyyyyyy");
-    } else if (savedColor.valueOf() == "#000000") {
-        console.log("Cannot Save Pure Black")
-        // Here we do proceed.
-    } else {
-        // Define some colors by playing wheel of fortune!
-        let compColor = tinycolor(savedColor).spin(180).toHexString();
-        let triadicColorOne = tinycolor(savedColor).spin(120).toHexString();
-        let triadicColorTwo = tinycolor(savedColor).spin(-120).toHexString();
-        let analColorOne = tinycolor(savedColor).spin(30).toHexString();
-        let analColorTwo = tinycolor(savedColor).spin(-30).toHexString();
-        let suppColorOne = tinycolor(savedColor).spin(90).toHexString();
-        let suppColorTwo = tinycolor(savedColor).spin(-90).toHexString();
-
         // define a new color and add it to OUR wheel of fortune. (But we don't add it yet)
-        let colorToAdd = getColorNames(savedColor, compColor, triadicColorOne, triadicColorTwo, analColorOne, analColorTwo, suppColorOne, suppColorTwo);
+        let colorToAdd = new CustomColor(savedColor.valueOf());
         addCustomColor(colorToAdd);
 
         // this just makes the code a tad cleaner and easier to write.
@@ -198,54 +219,16 @@ let onSaveColorClick = function () {
         idSupOne.innerHTML = getHREFLinkSP(colorToAdd.suppOneName, colorToAdd.suppColorOne);
         document.getElementById("AndSupplementary").innerHTML = " and ";
         idSupTwo.innerHTML = getHREFLinkSP(colorToAdd.suppTwoName, colorToAdd.suppColorTwo);
-    } //Don't be confused, this is the end of the else statement.
-} // Thiiiiis one is the end of the function \o/
+} // Thiiiiis one is the end of the function \o/\
 
-// This method creates and returns a color object with the color names included. Pretty sick huh? (KILL ME THIS WAS AWFUL
-// TO MAKE)
-let getColorNames = function (savedColor, compColor, triadicColorOne, triadicColorTwo, analColorOne, analColorTwo, suppColorOne, suppColorTwo) {
-    /*
-    Quick Rundown of how this syntax works rq by using the first one as an example:
-    let savedColorArr = ntc.name(savedColor);
-    ^ this is an array.   ^ ntc.name takes the savedColor (or the selectedColor) and finds its closest match in a database of names.
-                            It returns an array with that looks like: {"Input Color", "Closest Match Name", "Exact Match RGBA"}
-
-    let colorName = savedColorArr[1];
-                     ^ This is the "Closest Match Name" mentioned above. That's how I am getting the color names. :)
-
-     Then it's just rinse and repeat!
-     */
-    let savedColorarr = ntc.name(savedColor);
-    let colorName = savedColorarr[1];
-
-    let compArr = ntc.name(compColor);
-    let compName = compArr[1];
-
-    let triadicOneArr = ntc.name(triadicColorOne);
-    let triadicOneName = triadicOneArr[1];
-
-    let triadicTwoArr = ntc.name(triadicColorTwo);
-    let triadicTwoName = triadicTwoArr[1];
-
-    let analOneArr = ntc.name(analColorOne);
-    let analOneName = analOneArr[1];
-
-    let analTwoArr = ntc.name(analColorTwo);
-    let analTwoName = analTwoArr[1];
-
-    let suppOneArr = ntc.name(suppColorOne);
-    let suppOneName = suppOneArr[1];
-
-    let suppTwoArr = ntc.name(suppColorTwo);
-    let suppTwoName = suppTwoArr[1];
-
-// Here we return the super long custom color object.
-    return new CustomColor(savedColor, compColor, triadicColorOne, triadicColorTwo, analColorOne, analColorTwo, suppColorOne, suppColorTwo,
-        colorName, compName, triadicOneName, triadicTwoName, analOneName, analTwoName, suppOneName, suppTwoName);
+let onClearStorageClick = function() {
+    localStorage.clear();
+    window.location.reload();
 }
 
 // This just populates shit. // LOCAL STORAGE WORKS IN CHROME.
 let addCustomColor = function (color) {
+    console.log(color.codeName);
     localStorage.setItem(color.colorCode, JSON.stringify(color));
     customWheel.add(color);
     addToTable(color);
@@ -299,7 +282,7 @@ let onAlreadySavedColorClick = function () {
     idAnalOne.innerHTML = getHREFLinkSP(currentCustomColor.element.analOneName, currentCustomColor.element.analColorOne);
 
     document.getElementById("And").innerHTML = " and ";
-    idAnalTwo.innerHTML = getHREF(currentCustomColor.element.analTwoName, currentCustomColor.element.analColorTwo);
+    idAnalTwo.innerHTML = getHREFLinkSP(currentCustomColor.element.analTwoName, currentCustomColor.element.analColorTwo);
 
     // Start of Triadic Colors
     document.getElementById("TriadicColorsNoColor").innerHTML = "The Triadic Colors are: ";
@@ -377,3 +360,5 @@ let addToTable = function (color) {
 }
 // This is the method that populates the table at runtime.
 populateTableAtRuntime();
+// Initial call to populate the page.
+onColorClick('Red');

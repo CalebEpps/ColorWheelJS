@@ -13,8 +13,6 @@
         <script src="js/ntc.js"></script>
         <link rel="stylesheet" type="text/css" href="css/colors.css">
         <script src="js/CircularDoublyLinkedList.js"></script>
-        <script src="node_modules/requirejs/require.js"></script>
-
         <script>
             // These options apply to all color pickers on the page
                jscolor.presets.default = {
@@ -55,9 +53,12 @@
        
         <div class="column">
             <h2>Color Palette:</h2>
+
             <div id="CurrentColor" class="space">
                 <p id="ColorToChangeNoColor" class="wrapInline"></p>
                 <p id="ColorToChange"> </p>
+
+
             </div>
                     
             <div id="ComplementaryColor" class="space">
@@ -86,14 +87,29 @@
                 <p id="SupplementaryTwo"> </p>
             </div>
 
+
             <input id="ColorSelector" data-jscolor="{preset:'dark large'}">
-            <button id="saveCustomColor" onclick="onSaveColorClick();return false;">Save Custom Color</button>
+            <button id="saveCustomColor" class="styledBtn" onclick="onSaveColorClick();return false;">Save Custom Color</button>
+            <button id="clearStorage" class="styledBtn" onclick="onClearStorageClick();">Clear Palette</button>
+            <select class="styledBtn" id="clothingArticle">
+                <option>T Shirt</option>
+                <option>Pants</option>
+                <option>Shoes</option>
+                <option>Hat</option>
+                <option>Socks</option>
+            </select>
 
         </div>
 
         <table id="customColors" style="text-align: center; align-items: center"></table>
-
         <script src="js/Main.js"></script>
+
+    <p class="wrapInline" id-="tutText">Welcome to the Interactive Color Wheel! To begin, select an article of clothing
+    from the dropdown above. Once you've done that, select a color from the color wheel or the color picker above me. Your palettes
+    are saved, so feel free to return anytime! (P.S. Make sure you select an article of clothing first and then
+    click the color you'd like to browse.</p>
+
+
     </body>
 </html>
         

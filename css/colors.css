@@ -34,7 +34,7 @@
 }
 
 .space{
-    padding: 3%;
+    padding: .5%;
     margin-bottom: 0.5%;
     margin-right: 5%;
     border-left: 5px solid black;
@@ -73,7 +73,7 @@ td:hover {
     -webkit-text-stroke-color: lightslategrey;
 }
 
-#saveCustomColor {
+.styledBtn {
     background-color: grey;
     border: none;
     color: white;
@@ -81,5 +81,9 @@ td:hover {
     padding: 15px;
 }
 
+p {
+    font-weight: bold;
+    font-size: 20px;
+}
 
 
