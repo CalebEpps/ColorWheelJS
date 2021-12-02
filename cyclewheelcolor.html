@@ -13,7 +13,15 @@
         <script src="js/ntc.js"></script>
         <link rel="stylesheet" type="text/css" href="css/colors.css">
         <script src="js/CircularDoublyLinkedList.js"></script>
-        <script src="node_modules/requirejs/require.js"></script>
+
+        <script>
+            // These options apply to all color pickers on the page
+               jscolor.presets.default = {
+                previewSize:64, backgroundColor:'rgba(140,140,140,1)',
+                borderColor:'rgba(0,0,0,1)', padding:6, width:300, height:300,
+                closeButton:true, controlBorderColor:'rgba(0,0,0,1)'
+            };
+        </script>
 
 
 
@@ -22,7 +30,7 @@
         <div class="title">
             <h1>COLOR WHEEL</h1>
         </div>
-        
+
         <div class="column" id="wheel">
             <div class="image">
                 <h2>Choose a color by clicking a segment of the color wheel below</h2>
@@ -44,26 +52,26 @@
                 </map>
             </div>
         </div>
-       
+
         <div class="column">
-               
+
             <div id="CurrentColor" class="space">
                 <p id="ColorToChangeNoColor" class="wrapInline">The current color is: </p>
                 <p id="ColorToChange"> </p>
             </div>
-                    
+
             <div id="ComplementaryColor" class="space">
                 <p id="ComplementaryNoChange" class="wrapInline">The complementary color is: </p>
                 <p id="Complementary"> </p>
             </div>
-                    
+
             <div id="AnalogousColors" class="space">
                 <p id="AnalogousColorsNoColor" class="wrapInline"></p>
                 <p id="AnalogousOne" class="wrapInline"> </p>
                 <p id="And" class="wrapInline"> </p>
                 <p id="AnalogousTwo"> </p>
             </div>
-                    
+
             <div id="TriadicColors" class="space">
                 <p id="TriadicColorsNoColor" class="wrapInline"></p>
                 <p id="TriadicOne" class="wrapInline"> </p>
@@ -78,13 +86,10 @@
                 <p id="SupplementaryTwo"> </p>
             </div>
 
-            <input id="ColorSelector" data-jscolor="{preset:'dark large'}">
+            <div id="colorSelectorParts">
+            <input id="ColorSelector" data-jscolor="{value:'#FF0000'}">
             <button id="saveCustomColor" onclick="onSaveColorClick();return false;">Save Custom Color</button>
-
-            <table id="customColors" style="text-align: center;align-items: center">
-
-
-            </table>
+            </div>
 
             <!--
             This line is a test line to see how I can interact with the color return statements. :D
@@ -93,6 +98,11 @@
 
         </div>
 
+
+        <table id="customColors" style="text-align: center;align-items: center; ">
+
+
+        </table>
 
         <script src="js/Main.js"></script>
     </body>

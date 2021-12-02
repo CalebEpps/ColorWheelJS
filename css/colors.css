@@ -43,4 +43,36 @@
     -webkit-font-smoothing: antialiased;
 }
 
+tr {
+    text-shadow: #000 0px 0px 2px;
+    -webkit-font-smoothing: antialiased;
+
+}
+
+td {
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+    font-size: larger;
+}
+
+table {
+    border-spacing: 35px;
+    border-collapse: separate;
+    width:auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+td:hover {
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: lightslategrey;
+}
+
+#saveCustomColor {
+    background-color: grey;
+    border: none;
+    color: white;
+    font-size: 20px;
+    padding: 15px;
+}
 
