@@ -30,23 +30,6 @@ class CustomColor {
             return colorToNameArr[1];
         }
 
-        let compColor;
-        let triadicColorOne;
-        let TriadicColorTwo;
-        let analColorOne;
-        let analColorTwo;
-        let suppColorOne;
-        let suppColorTwo;
-
-        let codeName;
-        let compName;
-        let triadicOneName;
-        let triadicTwoName;
-        let analOneName;
-        let analTwoName;
-        let suppOneName;
-        let suppTwoName;
-
         // These are the hex values of the saved color
         this.colorCode = colorCode;
         this.compColor = createPartnerColor(180);
