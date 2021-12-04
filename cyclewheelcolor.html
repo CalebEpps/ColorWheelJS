@@ -87,22 +87,23 @@
                 <p id="AndSupplementary" class="wrapInline"> </p>
                 <p id="SupplementaryTwo"> </p>
             </div>
-
-            <input id="ColorSelector" data-jscolor="{preset:'dark large'}">
-            <button id="saveCustomColor" class="styledBtn" onclick="onSaveColorClick();return false;">Save Custom Color</button>
-            <button id="clearStorage" class="styledBtn" onclick="onClearStorageClick();">Clear Palette</button>
-            <select class="styledBtn" id="clothingArticle" onChange="updateClothing();return false;">
-                <option>T Shirt</option>
-                <option>Pants</option>
-                <option>Shoes</option>
-                <option>Hat</option>
-                <option>Socks</option>
-            </select>
-
+<div id="customColorFunctions">
+    <input id="ColorSelector" data-jscolor="{preset:'dark large'}">
+    <button id="saveCustomColor" class="styledBtn" onclick="onSaveColorClick();return false;">Save Custom Color</button>
+    <button id="clearStorage" class="styledBtn" onclick="onClearStorageClick();">Clear Palette</button>
+    <select class="styledBtn" id="clothingArticle" onChange="updateClothing();return false;">
+        <option>T Shirt</option>
+        <option>Pants</option>
+        <option>Shoes</option>
+        <option>Hat</option>
+        <option>Socks</option>
+    </select>
+</div>
         </div>
+    <table id="customColors" style="text-align: center; align-items: center"></table>
+    <script src="js/Main.js"></script>
 
-        <table id="customColors" style="text-align: center; align-items: center"></table>
-        <script src="js/Main.js"></script>
+
 
     <p class="wrapInline" id-="tutText">Welcome to the Interactive Color Wheel! To begin, select an article of clothing
     from the dropdown above. Once you've done that, select a color from the color wheel or the color picker above me. Your palettes

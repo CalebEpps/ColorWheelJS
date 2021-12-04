@@ -19,8 +19,6 @@ let idSupTwo = document.getElementById("SupplementaryTwo");
 
 
 class CustomColor {
-
-
     constructor(colorCode) {
 
         let createPartnerColor = function(spinInt) {
@@ -130,19 +128,12 @@ let onColorClick = function (colorName) {
 
     // Set the colors to the appropriate ones
     currentColor = wheel.traverseToByName(colorName, currentColor);
-
     complementaryColor = wheel.traverseTo(6, currentColor);
-
     analogousOne = wheel.traverseTo(1, currentColor);
-
     analogousTwo = wheel.traverseTo(-1, currentColor);
-
     triadicOne = wheel.traverseTo(4, currentColor);
-
     triadicTwo = wheel.traverseTo(-4, currentColor);
-
     supplementaryOne = wheel.traverseTo(3, currentColor);
-
     supplementaryTwo = wheel.traverseTo(-3, currentColor);
 
     document.getElementById("ColorToChangeNoColor").innerHTML = "The current color is:";
@@ -239,7 +230,6 @@ let testAllSavedColors = function () {
         customWheel.add(customColorToPopulate);
         lengthOfCustomWheel++;
     }
-
     currentCustomColor = customWheel.head;
 }
 // Running this method writes all the saved variables to the console. Testing purposes only
@@ -252,19 +242,16 @@ let onAlreadySavedColorClick = function () {
     currentCustomColor = customWheel.traverseToByName(this.innerText, currentCustomColor);
 
     idCurrentColor.innerHTML = getHREFLinkSP(currentCustomColor.element.codeName, currentCustomColor.element.colorCode);
-
     idCompColor.innerHTML = getHREFLinkSP(currentCustomColor.element.compName, currentCustomColor.element.compColor);
 
     // Start of Analogous Colors
     document.getElementById("AnalogousColorsNoColor").innerHTML = "The Analogous Colors are: ";
     idAnalOne.innerHTML = getHREFLinkSP(currentCustomColor.element.analOneName, currentCustomColor.element.analColorOne);
-
     document.getElementById("And").innerHTML = " and ";
     idAnalTwo.innerHTML = getHREFLinkSP(currentCustomColor.element.analTwoName, currentCustomColor.element.analColorTwo);
 
     // Start of Triadic Colors
     document.getElementById("TriadicColorsNoColor").innerHTML = "The Triadic Colors are: ";
-
     idTriOne.innerHTML = getHREFLinkSP(currentCustomColor.element.triadicOneName, currentCustomColor.element.triadicColorOne);
     document.getElementById("AndTriadic").innerHTML = " and ";
     idTriTwo.innerHTML = getHREFLinkSP(currentCustomColor.element.triadicTwoName, currentCustomColor.element.triadicColorTwo);

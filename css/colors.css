@@ -61,8 +61,8 @@ td {
 }
 
 table {
-    border-spacing: 35px;
     border-collapse: separate;
+    margin-top: 40%;
     width:auto;
     margin-left: auto;
     margin-right: auto;
@@ -84,6 +84,18 @@ td:hover {
 p {
     font-weight: bold;
     font-size: 20px;
+}
+
+#customColorFunctions {
+    width: 800px ;
+    margin-left: auto ;
+    margin-right: auto ;
+    padding: 5px;
+    border: 3px black;
+}
+
+#tableOfColors {
+    margin-top: 40%;
 }
 
 
