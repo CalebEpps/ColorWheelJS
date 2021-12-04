@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         <title>Color Wheel</title>
+        <link rel="icon" href="image/favicon.gif" type="image/gif">
         <!-- JSColor Library is open source -->
         <script src="js/jscolor.js"></script>
         <!--- TinyColor v1.4.2
@@ -87,11 +88,10 @@
                 <p id="SupplementaryTwo"> </p>
             </div>
 
-
             <input id="ColorSelector" data-jscolor="{preset:'dark large'}">
             <button id="saveCustomColor" class="styledBtn" onclick="onSaveColorClick();return false;">Save Custom Color</button>
             <button id="clearStorage" class="styledBtn" onclick="onClearStorageClick();">Clear Palette</button>
-            <select class="styledBtn" id="clothingArticle">
+            <select class="styledBtn" id="clothingArticle" onChange="updateClothing();return false;">
                 <option>T Shirt</option>
                 <option>Pants</option>
                 <option>Shoes</option>

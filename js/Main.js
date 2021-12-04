@@ -3,11 +3,19 @@ Quick Access Shorthands:
 document.querySelector('#ColorSelector').jscolor <-- Gets the jscolor instance from the HTML
  */
 
-
 let wheel = new circularLinkedListClass();
 let customWheel = new circularLinkedListClass();
 let lengthOfCustomWheel = 0;
 let currentCustomColor;
+
+let idCurrentColor = document.getElementById("ColorToChange");
+let idCompColor = document.getElementById("Complementary");
+let idAnalOne = document.getElementById("AnalogousOne");
+let idAnalTwo = document.getElementById("AnalogousTwo");
+let idTriOne = document.getElementById("TriadicOne");
+let idTriTwo = document.getElementById("TriadicTwo");
+let idSupOne = document.getElementById("SupplementaryOne");
+let idSupTwo = document.getElementById("SupplementaryTwo");
 
 
 class CustomColor {
@@ -63,10 +71,6 @@ class CustomColor {
     }
 }
 
-
-
-
-
 class BaseColor {
     constructor(codeName, colorCode) {
         this.codeName = codeName;
@@ -98,21 +102,23 @@ let triadicTwo = wheel.traverseTo(-4, currentColor);
 let supplementaryOne = wheel.traverseTo(3, currentColor);
 let supplementaryTwo = wheel.traverseTo(-3, currentColor);
 
+let currentColorIsDefault = true;
+let dropdown = document.getElementById('clothingArticle');
+let selectedClothing = dropdown.options[dropdown.selectedIndex].text;
 
+let updateClothing = function() {
+    console.log("Clothing Changed");
+    selectedClothing = dropdown.options[dropdown.selectedIndex].text;
+}
 
-let getHREFLink = function(inputNode){
+let getHREFLink = function (inputNode) {
     let textColorToSearch = inputNode.element.codeName;
-    let dropdown = document.getElementById('clothingArticle');
-    let selectedClothing = dropdown.options[dropdown.selectedIndex].text;
-    console.log(selectedClothing);
+    dropdown = document.getElementById('clothingArticle');
     let str = "<a style='color:" + inputNode.element.colorCode + "; text-decoration: none;' href='https://www.google.com/search?q=" + textColorToSearch + "+" + selectedClothing + "' target='_blank'>" + textColorToSearch;
     return str;
 }
 
-let getHREFLinkSP = function(colorToSearch, colorCode){
-    let dropdown = document.getElementById('clothingArticle');
-    let selectedClothing = dropdown.options[dropdown.selectedIndex].text;
-    console.log(selectedClothing);
+let getHREFLinkSP = function (colorToSearch, colorCode) {
     let str = "<a style='color:" + colorCode + "; text-decoration: none;' href='https://www.google.com/search?q=" + colorToSearch + "+" + selectedClothing + "' target='_blank'>" + colorToSearch;
     return str;
 }
@@ -120,31 +126,24 @@ let getHREFLinkSP = function(colorToSearch, colorCode){
 // On Click functionality for our buttons.
 // Color name is passed from HTML, used to traverse the CDLL, and display the colors to the user.
 let onColorClick = function (colorName) {
+    currentColorIsDefault = true;
 
     // Set the colors to the appropriate ones
     currentColor = wheel.traverseToByName(colorName, currentColor);
-    let idCurrentColor = document.getElementById("ColorToChange");
 
     complementaryColor = wheel.traverseTo(6, currentColor);
-    let idCompColor = document.getElementById("Complementary");
 
     analogousOne = wheel.traverseTo(1, currentColor);
-    let idAnalOne = document.getElementById("AnalogousOne");
 
     analogousTwo = wheel.traverseTo(-1, currentColor);
-    let idAnalTwo = document.getElementById("AnalogousTwo");
 
     triadicOne = wheel.traverseTo(4, currentColor);
-    let idTriOne = document.getElementById("TriadicOne");
 
     triadicTwo = wheel.traverseTo(-4, currentColor);
-    let idTriTwo = document.getElementById("TriadicTwo");
 
     supplementaryOne = wheel.traverseTo(3, currentColor);
-    let idSupOne = document.getElementById("SupplementaryOne");
 
     supplementaryTwo = wheel.traverseTo(-3, currentColor);
-    let idSupTwo = document.getElementById("SupplementaryTwo");
 
     document.getElementById("ColorToChangeNoColor").innerHTML = "The current color is:";
     idCurrentColor.innerHTML = getHREFLink(currentColor);
@@ -186,16 +185,6 @@ let onSaveColorClick = function () {
         let colorToAdd = new CustomColor(savedColor.valueOf());
         addCustomColor(colorToAdd);
 
-        // this just makes the code a tad cleaner and easier to write.
-        let idCurrentColor = document.getElementById("ColorToChange");
-        let idCompColor = document.getElementById("Complementary");
-        let idAnalOne = document.getElementById("AnalogousOne");
-        let idAnalTwo = document.getElementById("AnalogousTwo");
-        let idTriOne = document.getElementById("TriadicOne");
-        let idTriTwo = document.getElementById("TriadicTwo");
-        let idSupOne = document.getElementById("SupplementaryOne");
-        let idSupTwo = document.getElementById("SupplementaryTwo");
-
         document.getElementById("ColorToChangeNoColor").innerHTML = "The current color is:";
         idCurrentColor.innerHTML = getHREFLinkSP(colorToAdd.codeName, colorToAdd.colorCode);
 
@@ -219,7 +208,7 @@ let onSaveColorClick = function () {
         idSupOne.innerHTML = getHREFLinkSP(colorToAdd.suppOneName, colorToAdd.suppColorOne);
         document.getElementById("AndSupplementary").innerHTML = " and ";
         idSupTwo.innerHTML = getHREFLinkSP(colorToAdd.suppTwoName, colorToAdd.suppColorTwo);
-} // Thiiiiis one is the end of the function \o/\
+}
 
 let onClearStorageClick = function() {
     localStorage.clear();
@@ -257,21 +246,10 @@ let testAllSavedColors = function () {
 testAllSavedColors();
 
 let onAlreadySavedColorClick = function () {
+    currentColorIsDefault = false;
     // Here we set the current custom color node to the head. Then we traverse it from there.
     currentCustomColor = customWheel.head;
     currentCustomColor = customWheel.traverseToByName(this.innerText, currentCustomColor);
-
-    // What follows is a copy / paste of our other onClick methods before for the custom color node.
-    // It's important to note that our nodes in this CDLL implementation are generic. Some of the
-    // items in the customWheel CDLL are JSON objects and some are color objects.
-    let idCurrentColor = document.getElementById("ColorToChange");
-    let idCompColor = document.getElementById("Complementary");
-    let idAnalOne = document.getElementById("AnalogousOne");
-    let idAnalTwo = document.getElementById("AnalogousTwo");
-    let idTriOne = document.getElementById("TriadicOne");
-    let idTriTwo = document.getElementById("TriadicTwo");
-    let idSupOne = document.getElementById("SupplementaryOne");
-    let idSupTwo = document.getElementById("SupplementaryTwo");
 
     idCurrentColor.innerHTML = getHREFLinkSP(currentCustomColor.element.codeName, currentCustomColor.element.colorCode);
 
