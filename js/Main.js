@@ -252,66 +252,6 @@ let onAlreadySavedColorClick = function () {
     idSupTwo.innerHTML = getHREFLinkSP(currentCustomColor.element.suppTwoName, currentCustomColor.element.suppColorTwo);
 }
 
-// Function to populate table.
-let populateTableAtRuntime = function () {
-    // Declare the table row variable.
-    // No need to initialize it because it'll be initialized every FIVE colors to make a new row.
-    let tr;
-    // The table will be the same length of the custom wheel, so we can populate it using this variable.
-    for (let i = 0; i < lengthOfCustomWheel; i++) {
-        // Here we create a table entry.
-        let td = document.createElement('td');
-        // This controls the number of elements per row.
-        if (!(i % 7)) {
-            // If this operation is false, we create a new table before adding more td's.
-            tr = document.createElement('tr');
-            document.getElementById('customColors').appendChild(tr);
-        }
-        // The proceeding code appends a text node to our td and styles it a bit.
-        td.appendChild(document.createTextNode(currentCustomColor.element.codeName));
-        td.style.color = currentCustomColor.element.colorCode;
-        td.style.padding = '15px';
-        td.style.backgroundColor = currentCustomColor.element.colorCode;
-        // This line adds the td to the tr (table div to the table row)
-        tr.appendChild(td);
-        // They also need an on click listener. That's added below.
-        td.addEventListener('click', onAlreadySavedColorClick);
-        // Since we're populating the whole table right now, we need to skip to the next node for the next iteration.
-        currentCustomColor = customWheel.skipForwards(currentCustomColor);
-    }
-
-}
-
-// This method is called when we need to dynamically add a new color to our table.
-// This method is separate from our initial table population method despite it being almost the same.
-// the biggest difference is we need to declare our 'tr' variable before we proceed with the rest of the function.
-let addToTable = function (color) {
-    let table = document.getElementById('customColors');
-    let tr = table.rows[table.rows.length - 1];
-    // Notice the '<=' operator. Since the lengthOfCustomWheel variable is just an int,
-    // we use it to place the new color in the table dynamically.
-    for (let i = 0; i <= lengthOfCustomWheel; i++) {
-        if (i < lengthOfCustomWheel) {
-            // We do nothing here.
-        } else {
-            // This code is very similar to the above population method.
-            let td = document.createElement('td');
-            if (!(i % 7)) {
-                tr = document.createElement('tr');
-                document.getElementById('customColors').appendChild(tr);
-            }
-            td.appendChild(document.createTextNode(color.codeName));
-            td.style.color = color.colorCode;
-            td.style.textAlign = 'center';
-            td.style.padding = '15px';
-            td.style.backgroundColor = color.colorCode;
-            tr.appendChild(td);
-            td.addEventListener('click', onAlreadySavedColorClick);
-        }
-
-    }
-}
-
 let createFields = function() {
     document.querySelectorAll('.field').forEach(e => e.remove());
     let  container = document.querySelector('#container');
@@ -320,8 +260,10 @@ let createFields = function() {
         let div = document.createElement("div");
         div.className = 'field';
         div.textContent = currentCustomColor.element.codeName;
+        console.log(currentCustomColor.element.codeName);
         div.style.backgroundColor = currentCustomColor.element.colorCode;
-        div.addEventListener('click', onAlreadySavedColorClick)
+        div.addEventListener('click', onAlreadySavedColorClick);
+        div.addEventListener('dblclick', removeCustomColor);
         container.appendChild(div);
         currentCustomColor = customWheel.skipForwards(currentCustomColor);
     }
@@ -357,14 +299,13 @@ let distributeFields = function(deg){
 let removeCustomColor = function () {
     currentCustomColor = customWheel.traverseToByName(this.innerText, currentCustomColor);
     console.log("DELETING COLOR: " + this.innerText);
-    localStorage.getItem(currentCustomColor.element.colorCode);
+    console.log(localStorage.getItem(currentCustomColor.element.colorCode));
     localStorage.removeItem(currentCustomColor.element.colorCode);
     console.log(currentCustomColor.element.codeName);
     console.log(customWheel.getElementAt(customWheel.indexOf(currentCustomColor.element.colorCode)).element.codeName);
     customWheel.delete(currentCustomColor.element.colorCode);
     lengthOfCustomWheel--;
-    createFields();
-    distributeFields();
+    location.reload();
 }
 
 
