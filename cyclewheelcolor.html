@@ -1,116 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>Color Wheel</title>
-        <link rel="icon" href="image/favicon.gif" type="image/gif">
-        <!-- JSColor Library is open source -->
-        <script src="js/jscolor.js"></script>
-        <!--- TinyColor v1.4.2
-              https://github.com/bgrins/TinyColor
-              Brian Grinstead, MIT License  -->
-        <script src="js/tinycolor.js"></script>
-        <!--- This script is attributed to Chirag Mehta - http://chir.ag/projects/ntc
-        It's under the CC license requiring attribution.-->
-        <script src="js/ntc.js"></script>
-        <link rel="stylesheet" type="text/css" href="css/colors.css">
-        <script src="js/CircularDoublyLinkedList.js"></script>
-        <script>
-            // These options apply to all color pickers on the page
-               jscolor.presets.default = {
-                previewSize:64, backgroundColor:'rgba(140,140,140,1)',
-                borderColor:'rgba(0,0,0,1)', padding:6, width:300, height:300,
-                closeButton:true, controlBorderColor:'rgba(0,0,0,1)'
-            };
-        </script>
+<head>
+    <link rel="stylesheet" type="text/css" href="css/colors.css">
 
-    </head>
-    <body>
-        <div class="title">
-            <h1>COLOR WHEEL</h1>
-        </div>
-        
-        <div class="column" id="wheel">
-            <div class="image">
-                <h2>Choose a color by clicking a segment of the color wheel below</h2>
-                <h3>Then click on the colors to the right to build your outfit</h3>
-                <img src="image/wheel.png" alt="color wheel" usemap="#color_wheel_map" class="circle">
+    <script src="js/jscolor.js"></script>
+    <!--- TinyColor v1.4.2
+          https://github.com/bgrins/TinyColor
+          Brian Grinstead, MIT License  -->
+    <script src="js/tinycolor.js"></script>
+    <!--- This script is attributed to Chirag Mehta - http://chir.ag/projects/ntc
+    It's under the CC license requiring attribution.-->
+    <script src="js/ntc.js"></script>
+    <script src="js/CircularDoublyLinkedList.js"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
 
-                <map name="color_wheel_map">
-                    <area shape="poly" coords="206,31,331,27,308,120,228,119,206,31" href="" class="color" onclick="onColorClick('Red Orange'); return false;">
-                    <area shape="poly" coords="331,27,445,94,379,161,308,120,331,27" href="" class="color" onclick="onColorClick('Orange'); return false;">
-                    <area shape="poly" coords="445,94,508,204,418,228,379,161,445,94" href="" class="color" onclick="onColorClick('Light Orange'); return false;">
-                    <area shape="poly" coords="508,204,509,335,419,310,418,228,508,204" href="" class="color" onclick="onColorClick('Yellow'); return false;">
-                    <area shape="poly" coords="509,335,445,447,382,381,419,310,509,335" href="" class="color" onclick="onColorClick('Lime Green'); return false;">
-                    <area shape="poly" coords="445,447,332,508,310,418,382,381,445,447" href="" class="color" onclick="onColorClick('Green'); return false;">
-                    <area shape="poly" coords="332,508,207,510,231,420,310,418,332,508" href="" class="color" onclick="onColorClick('Light Blue'); return false;">
-                    <area shape="poly" coords="207,510,94,447,159,381,231,420,207,510" href="" class="color" onclick="onColorClick('Blue'); return false;">
-                    <area shape="poly" coords="94,447,29,334,117,309,159,381,94,447" href="" class="color" onclick="onColorClick('Violet'); return false;">
-                    <area shape="poly" coords="29,334,30,206,120,232,117,309,29,334" href="" class="color" onclick="onColorClick('Purple'); return false;">
-                    <area shape="poly" coords="30,206,92,94,161,161,120,232,30,206" href="" class="color" onclick="onColorClick('Magenta'); return false;">
-                    <area shape="poly" coords="92,94,206,31,228,119,161,161,92,94" href="" class="color" onclick="onColorClick('Red'); return false;">
-                </map>
-            </div>
-        </div>
-       
-        <div class="column">
-            <h2>Color Palette:</h2>
+    <script>
+        // These options apply to all color pickers on the page
+        jscolor.presets.default = {
+            previewSize:64, backgroundColor:'rgba(140,140,140,1)',
+            borderColor:'rgba(0,0,0,1)', padding:6, width:300, height:300,
+            closeButton:true, controlBorderColor:'rgba(0,0,0,1)'
+        };
+    </script>
 
-            <div id="CurrentColor" class="space">
-                <p id="ColorToChangeNoColor" class="wrapInline"></p>
-                <p id="ColorToChange"> </p>
-
-
-            </div>
-                    
-            <div id="ComplementaryColor" class="space">
-                <p id="ComplementaryNoChange" class="wrapInline"></p>
-                <p id="Complementary"> </p>
-            </div>
-                    
-            <div id="AnalogousColors" class="space">
-                <p id="AnalogousColorsNoColor" class="wrapInline"></p>
-                <p id="AnalogousOne" class="wrapInline"> </p>
-                <p id="And" class="wrapInline"> </p>
-                <p id="AnalogousTwo"> </p>
-            </div>
-                    
-            <div id="TriadicColors" class="space">
-                <p id="TriadicColorsNoColor" class="wrapInline"></p>
-                <p id="TriadicOne" class="wrapInline"> </p>
-                <p id="AndTriadic" class="wrapInline"> </p>
-                <p id="TriadicTwo"> </p>
-            </div>
-
-            <div id="SupplementaryColors" class="space">
-                <p id="SupplementaryColorsNoColor" class="wrapInline"></p>
-                <p id="SupplementaryOne" class="wrapInline"> </p>
-                <p id="AndSupplementary" class="wrapInline"> </p>
-                <p id="SupplementaryTwo"> </p>
-            </div>
-<div id="customColorFunctions">
-    <input id="ColorSelector" data-jscolor="{preset:'dark large'}">
-    <button id="saveCustomColor" class="styledBtn" onclick="onSaveColorClick();return false;">Save Custom Color</button>
-    <button id="clearStorage" class="styledBtn" onclick="onClearStorageClick();">Clear Palette</button>
-    <select class="styledBtn" id="clothingArticle" onChange="updateClothing();return false;">
-        <option>T Shirt</option>
-        <option>Pants</option>
-        <option>Shoes</option>
-        <option>Hat</option>
-        <option>Socks</option>
-    </select>
+</head>
+<body>
+<div class="title">
+    <h1>COLOR WHEEL</h1>
 </div>
-        </div>
-    <table id="customColors" style="text-align: center; align-items: center"></table>
-    <script src="js/Main.js"></script>
 
 
 
-    <p class="wrapInline" id-="tutText">Welcome to the Interactive Color Wheel! To begin, select an article of clothing
+
+<div class="column" id="wheel">
+    <div class="image">
+        <h2>Choose a color by clicking a segment of the color wheel below</h2>
+        <h3>Then click on the colors to the right to build your outfit</h3>
+        <img src="image/wheel.png" alt="color wheel" usemap="#color_wheel_map" class="circle">
+
+        <map name="color_wheel_map">
+            <area shape="poly" coords="206,31,331,27,308,120,228,119,206,31" href="" class="color" onclick="onColorClick('Red Orange'); return false;">
+            <area shape="poly" coords="331,27,445,94,379,161,308,120,331,27" href="" class="color" onclick="onColorClick('Orange'); return false;">
+            <area shape="poly" coords="445,94,508,204,418,228,379,161,445,94" href="" class="color" onclick="onColorClick('Light Orange'); return false;">
+            <area shape="poly" coords="508,204,509,335,419,310,418,228,508,204" href="" class="color" onclick="onColorClick('Yellow'); return false;">
+            <area shape="poly" coords="509,335,445,447,382,381,419,310,509,335" href="" class="color" onclick="onColorClick('Lime Green'); return false;">
+            <area shape="poly" coords="445,447,332,508,310,418,382,381,445,447" href="" class="color" onclick="onColorClick('Green'); return false;">
+            <area shape="poly" coords="332,508,207,510,231,420,310,418,332,508" href="" class="color" onclick="onColorClick('Light Blue'); return false;">
+            <area shape="poly" coords="207,510,94,447,159,381,231,420,207,510" href="" class="color" onclick="onColorClick('Blue'); return false;">
+            <area shape="poly" coords="94,447,29,334,117,309,159,381,94,447" href="" class="color" onclick="onColorClick('Violet'); return false;">
+            <area shape="poly" coords="29,334,30,206,120,232,117,309,29,334" href="" class="color" onclick="onColorClick('Purple'); return false;">
+            <area shape="poly" coords="30,206,92,94,161,161,120,232,30,206" href="" class="color" onclick="onColorClick('Magenta'); return false;">
+            <area shape="poly" coords="92,94,206,31,228,119,161,161,92,94" href="" class="color" onclick="onColorClick('Red'); return false;">
+        </map>
+    </div>
+</div>
+
+<div class="column">
+    <h2>Color Palette:</h2>
+
+    <div id="CurrentColor" class="space">
+        <p id="ColorToChangeNoColor" class="wrapInline"></p>
+        <p id="ColorToChange"> </p>
+
+
+    </div>
+
+    <div id="ComplementaryColor" class="space">
+        <p id="ComplementaryNoChange" class="wrapInline"></p>
+        <p id="Complementary"> </p>
+    </div>
+
+    <div id="AnalogousColors" class="space">
+        <p id="AnalogousColorsNoColor" class="wrapInline"></p>
+        <p id="AnalogousOne" class="wrapInline"> </p>
+        <p id="And" class="wrapInline"> </p>
+        <p id="AnalogousTwo"> </p>
+    </div>
+
+    <div id="TriadicColors" class="space">
+        <p id="TriadicColorsNoColor" class="wrapInline"></p>
+        <p id="TriadicOne" class="wrapInline"> </p>
+        <p id="AndTriadic" class="wrapInline"> </p>
+        <p id="TriadicTwo"> </p>
+    </div>
+
+    <div id="SupplementaryColors" class="space">
+        <p id="SupplementaryColorsNoColor" class="wrapInline"></p>
+        <p id="SupplementaryOne" class="wrapInline"> </p>
+        <p id="AndSupplementary" class="wrapInline"> </p>
+        <p id="SupplementaryTwo"> </p>
+    </div>
+
+
+    <div id="customColorFunctions">
+        <input id="ColorSelector" data-jscolor="{preset:'dark large'}">
+        <button id="saveCustomColor" class="styledBtn" onclick="onSaveColorClick();return false;">Save Custom Color</button>
+        <button id="clearStorage" class="styledBtn" onclick="onClearStorageClick();">Clear Palette</button>
+        <select class="styledBtn" id="clothingArticle" onChange="updateClothing();return false;">
+            <option>T Shirt</option>
+            <option>Pants</option>
+            <option>Shoes</option>
+            <option>Hat</option>
+            <option>Socks</option>
+        </select>
+    </div>
+</div>
+<table id="customColors" style="text-align: center; align-items: center"></table>
+
+
+<p class="wrapInline" id-="tutText">Welcome to the Interactive Color Wheel! To begin, select an article of clothing
     from the dropdown above. Once you've done that, select a color from the color wheel or the color picker above me. Your palettes
     are saved, so feel free to return anytime! (P.S. Make sure you select an article of clothing first and then
     click the color you'd like to browse.</p>
 
 
-    </body>
+
+
+<div id="container">
+    <div id="center"></div>
+    <div id="crosshair-x"></div>
+    <div id="crosshair-y"></div>
+    <div class="field">1</div>
+    <div class="field">2</div>
+    <div class="field">3</div>
+    <div class="field">4</div>
+    <!--
+    <div class="field">5</div>
+    <div class="field">6</div>
+    -->
+</div>
+<script src="js/Main.js"></script>
+</body>
 </html>
-        

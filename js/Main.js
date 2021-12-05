@@ -155,33 +155,33 @@ let onColorClick = function (colorName) {
 let onSaveColorClick = function () {
     // This variable holds the hex value of whatever the color selection is atm.
     let savedColor = document.querySelector('#ColorSelector').jscolor.toHEXString();
-        // define a new color and add it to OUR wheel of fortune. (But we don't add it yet)
-        let colorToAdd = new CustomColor(savedColor.valueOf());
-        addCustomColor(colorToAdd);
+    // define a new color and add it to OUR wheel of fortune. (But we don't add it yet)
+    let colorToAdd = new CustomColor(savedColor.valueOf());
+    addCustomColor(colorToAdd);
 
-        document.getElementById("ColorToChangeNoColor").innerHTML = "The current color is:";
-        idCurrentColor.innerHTML = getHREFLinkSP(colorToAdd.codeName, colorToAdd.colorCode);
+    document.getElementById("ColorToChangeNoColor").innerHTML = "The current color is:";
+    idCurrentColor.innerHTML = getHREFLinkSP(colorToAdd.codeName, colorToAdd.colorCode);
 
-        document.getElementById("ComplementaryNoChange").innerHTML = "The complementary color is:";
-        idCompColor.innerHTML = getHREFLinkSP(colorToAdd.compName, colorToAdd.compColor);
+    document.getElementById("ComplementaryNoChange").innerHTML = "The complementary color is:";
+    idCompColor.innerHTML = getHREFLinkSP(colorToAdd.compName, colorToAdd.compColor);
 
-        // Start of Analogous Colors
-        document.getElementById("AnalogousColorsNoColor").innerHTML = "The Analogous Colors are: ";
-        idAnalOne.innerHTML = getHREFLinkSP(colorToAdd.analOneName, colorToAdd.analColorOne);
-        document.getElementById("And").innerHTML = " and ";
-        idAnalTwo.innerHTML = getHREFLinkSP(colorToAdd.analTwoName, colorToAdd.analColorTwo);
+    // Start of Analogous Colors
+    document.getElementById("AnalogousColorsNoColor").innerHTML = "The Analogous Colors are: ";
+    idAnalOne.innerHTML = getHREFLinkSP(colorToAdd.analOneName, colorToAdd.analColorOne);
+    document.getElementById("And").innerHTML = " and ";
+    idAnalTwo.innerHTML = getHREFLinkSP(colorToAdd.analTwoName, colorToAdd.analColorTwo);
 
-        // Start of Triadic Colors
-        document.getElementById("TriadicColorsNoColor").innerHTML = "The Triadic Colors are: ";
-        idTriOne.innerHTML = getHREFLinkSP(colorToAdd.triadicOneName, colorToAdd.triadicColorOne);
-        document.getElementById("AndTriadic").innerHTML = " and ";
-        idTriTwo.innerHTML = getHREFLinkSP(colorToAdd.triadicTwoName, colorToAdd.triadicColorTwo);
+    // Start of Triadic Colors
+    document.getElementById("TriadicColorsNoColor").innerHTML = "The Triadic Colors are: ";
+    idTriOne.innerHTML = getHREFLinkSP(colorToAdd.triadicOneName, colorToAdd.triadicColorOne);
+    document.getElementById("AndTriadic").innerHTML = " and ";
+    idTriTwo.innerHTML = getHREFLinkSP(colorToAdd.triadicTwoName, colorToAdd.triadicColorTwo);
 
 
-        document.getElementById("SupplementaryColorsNoColor").innerHTML = "The Supplementary Colors are: ";
-        idSupOne.innerHTML = getHREFLinkSP(colorToAdd.suppOneName, colorToAdd.suppColorOne);
-        document.getElementById("AndSupplementary").innerHTML = " and ";
-        idSupTwo.innerHTML = getHREFLinkSP(colorToAdd.suppTwoName, colorToAdd.suppColorTwo);
+    document.getElementById("SupplementaryColorsNoColor").innerHTML = "The Supplementary Colors are: ";
+    idSupOne.innerHTML = getHREFLinkSP(colorToAdd.suppOneName, colorToAdd.suppColorOne);
+    document.getElementById("AndSupplementary").innerHTML = " and ";
+    idSupTwo.innerHTML = getHREFLinkSP(colorToAdd.suppTwoName, colorToAdd.suppColorTwo);
 }
 
 let onClearStorageClick = function() {
@@ -303,9 +303,38 @@ let addToTable = function (color) {
         }
 
     }
-
-
 }
+
+
+let distributeFields = function(deg){
+    deg = deg || 0;
+    var radius = 200;
+    var fields = document.querySelectorAll('.field');
+    let  container = document.querySelector('#container');
+    let  width = container.offsetWidth;
+    let  height = container.offsetHeight;
+    let  angle = deg || Math.PI * 3.5;
+    let   step = (2 * Math.PI) / fields.length;
+    console.log(width, height);
+
+    //using forEach loop on a NodeList instead of a Jquery .each,
+    //so we can now use "field" as an iterator instead of $(this)
+
+    fields.forEach((field)=>{
+        var x = Math.round(width / 2 + radius * Math.cos(angle) - field.offsetWidth/2);
+        var y = Math.round(height / 2 + radius * Math.sin(angle) - field.offsetHeight/2);
+        console.log(x, y)
+        field.style.left = x + 'px';  //adding inline style to the document (field)
+        field.style.top= y + 'px';
+
+        angle += step;
+    })
+}
+
+distributeFields();
+
+
+
 // This is the method that populates the table at runtime.
 populateTableAtRuntime();
 // Initial call to populate the page.
