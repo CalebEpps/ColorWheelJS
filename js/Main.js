@@ -191,11 +191,18 @@ let onClearStorageClick = function() {
 
 // This just populates shit. // LOCAL STORAGE WORKS IN CHROME.
 let addCustomColor = function (color) {
+    if(lengthOfCustomWheel >= 10) {
+        alert("You cannot save more than 10 colors at this time on the custom palette. Clear your palette to add more!");
+        return;
+    }
     console.log(color.codeName);
     localStorage.setItem(color.colorCode, JSON.stringify(color));
     customWheel.add(color);
-    addToTable(color);
+    //addToTable(color);
     lengthOfCustomWheel++;
+    createFields();
+    console.log("Total Colors Saved is: " + lengthOfCustomWheel);
+    distributeFields(10);
 }
 
 // Prints all the saved color information to the console.
@@ -305,14 +312,30 @@ let addToTable = function (color) {
     }
 }
 
+let createFields = function() {
+    document.querySelectorAll('.field').forEach(e => e.remove());
+    let  container = document.querySelector('#container');
+    currentCustomColor = customWheel.head;
+    for(let i = 0; i < lengthOfCustomWheel; i++) {
+        let div = document.createElement("div");
+        div.className = 'field';
+        div.textContent = currentCustomColor.element.codeName;
+        div.style.backgroundColor = currentCustomColor.element.colorCode;
+        div.addEventListener('click', onAlreadySavedColorClick)
+        container.appendChild(div);
+        currentCustomColor = customWheel.skipForwards(currentCustomColor);
+    }
+}
 
 let distributeFields = function(deg){
     deg = deg || 0;
-    var radius = 200;
-    var fields = document.querySelectorAll('.field');
+    let radius = lengthOfCustomWheel * 20;
+    let containerMarginTop = -200 + (lengthOfCustomWheel * 20);
+    let fields = document.querySelectorAll('.field');
     let  container = document.querySelector('#container');
     let  width = container.offsetWidth;
     let  height = container.offsetHeight;
+    container.style.marginTop = containerMarginTop + 'px';
     let  angle = deg || Math.PI * 3.5;
     let   step = (2 * Math.PI) / fields.length;
     console.log(width, height);
@@ -321,9 +344,8 @@ let distributeFields = function(deg){
     //so we can now use "field" as an iterator instead of $(this)
 
     fields.forEach((field)=>{
-        var x = Math.round(width / 2 + radius * Math.cos(angle) - field.offsetWidth/2);
-        var y = Math.round(height / 2 + radius * Math.sin(angle) - field.offsetHeight/2);
-        console.log(x, y)
+        let x = Math.round(width / 2 + radius * Math.cos(angle) - field.offsetWidth/2);
+        let y = Math.round(height / 2 + radius * Math.sin(angle) - field.offsetHeight/2);
         field.style.left = x + 'px';  //adding inline style to the document (field)
         field.style.top= y + 'px';
 
@@ -331,11 +353,25 @@ let distributeFields = function(deg){
     })
 }
 
-distributeFields();
+
+let removeCustomColor = function () {
+    currentCustomColor = customWheel.traverseToByName(this.innerText, currentCustomColor);
+    console.log("DELETING COLOR: " + this.innerText);
+    localStorage.getItem(currentCustomColor.element.colorCode);
+    localStorage.removeItem(currentCustomColor.element.colorCode);
+    console.log(currentCustomColor.element.codeName);
+    console.log(customWheel.getElementAt(customWheel.indexOf(currentCustomColor.element.colorCode)).element.codeName);
+    customWheel.delete(currentCustomColor.element.colorCode);
+    lengthOfCustomWheel--;
+    createFields();
+    distributeFields();
+}
 
 
 
 // This is the method that populates the table at runtime.
-populateTableAtRuntime();
+//populateTableAtRuntime();
 // Initial call to populate the page.
 onColorClick('Red');
+createFields();
+distributeFields();

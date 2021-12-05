@@ -92,6 +92,7 @@ td:hover {
 p {
     font-weight: bold;
     font-size: 20px;
+    display: block;
 }
 
 
@@ -100,43 +101,32 @@ body {
 }
 
 #container {
-    width: 600px;
-    height: 600px;
-    border: 1px solid #000;
-    margin-top: 10%;
+    width: 500px;
+    height: 500px;
     position: relative;
-}
+    margin-top: -400px;
+    margin-left: auto;
+    margin-right: auto;
 
-#center {
-    width: 10px;
-    height: 10px;
-    position: absolute;
-    left: 295px;
-    top: 295px;
-    background: #000;
 }
 
 .field {
-    width: 20px;
-    height: 20px;
     position: absolute;
-    background: #f00;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+    font-size: larger;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    border: 2px solid #000;
+    text-align: center;
+    /* These lines make the text center properly */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
-#crosshair-x {
-    width: 600px;
-    height: 1px;
-    background: #000;
-    position: absolute;
-    left: 0;
-    top: 300px;
-}
-
-#crosshair-y {
-    width: 1px;
-    height: 600px;
-    background: #000;
-    position: absolute;
-    left: 300px;
-    top: 0;
+#tutText {
+    margin-top: 400px;
 }
