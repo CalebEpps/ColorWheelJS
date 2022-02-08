@@ -200,9 +200,8 @@ let addCustomColor = function (color) {
     customWheel.add(color);
     //addToTable(color);
     lengthOfCustomWheel++;
-    createFields();
+    addToTable(color);
     console.log("Total Colors Saved is: " + lengthOfCustomWheel);
-    distributeFields(10);
 }
 
 // Prints all the saved color information to the console.
@@ -252,49 +251,6 @@ let onAlreadySavedColorClick = function () {
     idSupTwo.innerHTML = getHREFLinkSP(currentCustomColor.element.suppTwoName, currentCustomColor.element.suppColorTwo);
 }
 
-let createFields = function() {
-    document.querySelectorAll('.field').forEach(e => e.remove());
-    let  container = document.querySelector('#container');
-    currentCustomColor = customWheel.head;
-    for(let i = 0; i < lengthOfCustomWheel; i++) {
-        let div = document.createElement("div");
-        div.className = 'field';
-        div.textContent = currentCustomColor.element.codeName;
-        console.log(currentCustomColor.element.codeName);
-        div.style.backgroundColor = currentCustomColor.element.colorCode;
-        div.addEventListener('click', onAlreadySavedColorClick);
-        div.addEventListener('dblclick', removeCustomColor);
-        container.appendChild(div);
-        currentCustomColor = customWheel.skipForwards(currentCustomColor);
-    }
-}
-
-let distributeFields = function(deg){
-    deg = deg || 0;
-    let radius = lengthOfCustomWheel * 20;
-    let containerMarginTop = -200 + (lengthOfCustomWheel * 20);
-    let fields = document.querySelectorAll('.field');
-    let  container = document.querySelector('#container');
-    let  width = container.offsetWidth;
-    let  height = container.offsetHeight;
-    container.style.marginTop = containerMarginTop + 'px';
-    let  angle = deg || Math.PI * 3.5;
-    let   step = (2 * Math.PI) / fields.length;
-    console.log(width, height);
-
-    //using forEach loop on a NodeList instead of a Jquery .each,
-    //so we can now use "field" as an iterator instead of $(this)
-
-    fields.forEach((field)=>{
-        let x = Math.round(width / 2 + radius * Math.cos(angle) - field.offsetWidth/2);
-        let y = Math.round(height / 2 + radius * Math.sin(angle) - field.offsetHeight/2);
-        field.style.left = x + 'px';  //adding inline style to the document (field)
-        field.style.top= y + 'px';
-
-        angle += step;
-    })
-}
-
 
 let removeCustomColor = function () {
     currentCustomColor = customWheel.traverseToByName(this.innerText, currentCustomColor);
@@ -308,11 +264,68 @@ let removeCustomColor = function () {
     location.reload();
 }
 
+let populateTableAtRuntime = function () {
+    // Declare the table row variable.
+    // No need to initialize it because it'll be initialized every FIVE colors to make a new row.
+    let tr;
+    // The table will be the same length of the custom wheel, so we can populate it using this variable.
+    for (let i = 0; i < lengthOfCustomWheel; i++) {
+        // Here we create a table entry.
+        let td = document.createElement('td');
+        // This controls the number of elements per row.
+        if (!(i % 5)) {
+            // If this operation is false, we create a new table before adding more td's.
+            tr = document.createElement('tr');
+            document.getElementById('customColors').appendChild(tr);
+        }
+        // The proceeding code appends a text node to our td and styles it a bit.
+        td.appendChild(document.createTextNode(currentCustomColor.element.codeName));
+        td.style.color = currentCustomColor.element.colorCode;
+        td.style.padding = '15px';
+        // This line adds the td to the tr (table div to the table row)
+        tr.appendChild(td);
+        // They also need an on click listener. That's added below.
+        td.addEventListener('click', onAlreadySavedColorClick);
+        // Since we're populating the whole table right now, we need to skip to the next node for the next iteration.
+        currentCustomColor = customWheel.skipForwards(currentCustomColor);
+    }
+
+}
+
+// This method is called when we need to dynamically add a new color to our table.
+// This method is separate from our initial table population method despite it being almost the same.
+// the biggest difference is we need to declare our 'tr' variable before we proceed with the rest of the function.
+let addToTable = function (color) {
+    let table = document.getElementById('customColors');
+    let tr = table.rows[table.rows.length - 1];
+    // Notice the '<=' operator. Since the lengthOfCustomWheel variable is just an int,
+    // we use it to place the new color in the table dynamically.
+    for (let i = 0; i <= lengthOfCustomWheel; i++) {
+        if (i < lengthOfCustomWheel) {
+            // We do nothing here.
+        } else {
+            // This code is very similar to the above population method.
+            let td = document.createElement('td');
+            if (!(i % 7)) {
+                tr = document.createElement('tr');
+                document.getElementById('customColors').appendChild(tr);
+            }
+            td.appendChild(document.createTextNode(color.codeName));
+            td.style.color = color.colorCode;
+            td.style.textAlign = 'center';
+            td.style.padding = '15px';
+            td.style.backgroundColor = color.colorCode;
+            tr.appendChild(td);
+            td.addEventListener('click', onAlreadySavedColorClick);
+        }
+
+    }
+}
+
 
 
 // This is the method that populates the table at runtime.
 //populateTableAtRuntime();
 // Initial call to populate the page.
 onColorClick('Red');
-createFields();
-distributeFields();
+populateTableAtRuntime();
