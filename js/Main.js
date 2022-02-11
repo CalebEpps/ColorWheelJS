@@ -456,6 +456,43 @@ let onClearStorageClick = function() {
     location.reload();
 }
 
+/*
+// I believe that in order to add functionality for image searches or product searches, we'll use this:
+http://api.serpstack.com/search?access_key=3764606f2e18d893ad9e662bb992b95d&query=" + "search_Term" + "&type=shopping"
+as the URL builder
+
+fetch("http://api.serpstack.com/search?access_key=3764606f2e18d893ad9e662bb992b95d&query=dogs")
+    .then((response) => {
+        return response.json();
+    })
+    .then((results) => {
+        let searchQuery = results;
+        console.log(JSON.stringify(searchQuery));
+    });
+*/
+
+let tablePlaceholderPopulate = function() {
+    let table = document.getElementById("results_Grid");
+    let tr;
+    let numberOfImagesInPlaceholder = 3;
+
+    for (let i = 0; i < numberOfImagesInPlaceholder; i++) {
+        let td = document.createElement('td');
+        if (!(i % 2)) {
+            tr = document.createElement('tr');
+            table.appendChild(tr);
+        }
+        let img = document.createElement('img');
+        let imgSrc = "https://cdn.shopify.com/s/files/1/0232/0543/products/dumptruckshirtblk1_1080x.png";
+        img.src = imgSrc;
+        td.appendChild(img);
+        tr.appendChild(td);
+
+    }
+
+}
+
+tablePlaceholderPopulate();
 
 // This is the method that populates the table at runtime.
 populateTableAtRuntime();
