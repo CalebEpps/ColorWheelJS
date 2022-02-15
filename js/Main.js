@@ -3,10 +3,7 @@ Quick Access Shorthands:
 document.querySelector('#ColorSelector').jscolor <-- Gets the jscolor instance from the HTML
  */
 
-
 let wheel = new circularLinkedListClass();
-// Currently Unused CDLL for custom colors.
-// TODO: IMPLEMENT THE GODDAMN CUSTOM COLOR CDLL FFS
 let customWheel = new circularLinkedListClass();
 let lengthOfCustomWheel = 0;
 let currentCustomColor;
@@ -461,7 +458,9 @@ let onClearStorageClick = function() {
 http://api.serpstack.com/search?access_key=3764606f2e18d893ad9e662bb992b95d&query=" + "search_Term" + "&type=shopping"
 as the URL builder
 
-fetch("http://api.serpstack.com/search?access_key=3764606f2e18d893ad9e662bb992b95d&query=dogs")
+fetch("http://api.serpstack.com/search
+     ?access_key=3764606f2e18d893ad9e662bb992b95d
+     &query=dogs")
     .then((response) => {
         return response.json();
     })
@@ -471,20 +470,73 @@ fetch("http://api.serpstack.com/search?access_key=3764606f2e18d893ad9e662bb992b9
     });
 */
 
-let tablePlaceholderPopulate = function() {
+let formatQuery = function(searchTerms) {
+    let wordArr = searchTerms.split(" ");
+    let strToReturn = "";
+    for(let i = 0; i < wordArr.length - 1; i++) {
+        console.log(wordArr[i]);
+        strToReturn += wordArr[i] + "+";
+        console.log(strToReturn);
+    }
+    strToReturn += wordArr[wordArr.length - 1];
+    console.log(strToReturn);
+    return strToReturn;
+}
+
+// Tester Method for Experimenting with Returned JSON data without wasting API calls. Use the below
+// Function to return true API calls.
+ let getStaticSearchResults = function() {
+    fetch("./js/data.json")
+        .then((response) => {
+            return response.json();
+        })
+        .then((results) => {
+            //console.log(results);
+            let imageResults = results.image_results;
+            tablePlaceholderPopulate(imageResults);
+        });
+}
+
+// Return live API results
+let getSearchResults = function(searchTerms) {
+    fetch("https://api.scaleserp.com/search" +
+        "?api_key=85808701374E484F90F03B8A0624F05A" +
+        "&q=" + formatQuery(searchTerms) +
+        "&search_type=images")
+        .then((response) => {
+            return response.json();
+        })
+        .then((results) => {
+            let searchQuery = results;
+            console.log(JSON.stringify(searchQuery))
+            console.log(searchQuery);
+        });
+}
+
+// Table Placeholder Populate may not be renamed to tablePopulate.
+// Functionally the same as the custom color table with differences in its output
+let tablePlaceholderPopulate = function(imageResultsArr) {
     let table = document.getElementById("results_Grid");
     let tr;
-    let numberOfImagesInPlaceholder = 3;
 
-    for (let i = 0; i < numberOfImagesInPlaceholder; i++) {
+    for (let i = 0; i < imageResultsArr.length; i++) {
+        console.log(imageResultsArr[i]);
         let td = document.createElement('td');
-        if (!(i % 2)) {
+        td.style.maxWidth = "100px";
+        td.style.padding = "10px";
+        if (!(i % 10)) {
+            // Start a new row and stylize it
             tr = document.createElement('tr');
+            tr.style.maxWidth = "100px";
             table.appendChild(tr);
         }
+        // Create inline img and stylize it before appending it. May separate this
+        // into a separate function and expand it with a fully dynamically generated table cell.
         let img = document.createElement('img');
-        let imgSrc = "https://cdn.shopify.com/s/files/1/0232/0543/products/dumptruckshirtblk1_1080x.png";
+        let imgSrc = imageResultsArr[i].image;
         img.src = imgSrc;
+        img.style.maxWidth = "100%";
+        img.style.padding = "10px";
         td.appendChild(img);
         tr.appendChild(td);
 
@@ -492,8 +544,8 @@ let tablePlaceholderPopulate = function() {
 
 }
 
-tablePlaceholderPopulate();
-
+// Test Static Search Results (No Live API)
+getStaticSearchResults();
 // This is the method that populates the table at runtime.
 populateTableAtRuntime();
 onColorClick("Red");
