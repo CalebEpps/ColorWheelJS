@@ -474,12 +474,12 @@ let formatQuery = function(searchTerms) {
     let wordArr = searchTerms.split(" ");
     let strToReturn = "";
     for(let i = 0; i < wordArr.length - 1; i++) {
-        console.log(wordArr[i]);
+       // console.log(wordArr[i]);
         strToReturn += wordArr[i] + "+";
-        console.log(strToReturn);
+       // console.log(strToReturn);
     }
     strToReturn += wordArr[wordArr.length - 1];
-    console.log(strToReturn);
+   // console.log(strToReturn);
     return strToReturn;
 }
 
@@ -491,8 +491,8 @@ let formatQuery = function(searchTerms) {
             return response.json();
         })
         .then((results) => {
-            //console.log(results);
-            let imageResults = results.image_results;
+            console.log(results);
+            let imageResults = results;
             tablePlaceholderPopulate(imageResults);
         });
 }
@@ -502,34 +502,43 @@ let getSearchResults = function(searchTerms) {
     fetch("https://api.scaleserp.com/search" +
         "?api_key=85808701374E484F90F03B8A0624F05A" +
         "&q=" + formatQuery(searchTerms) +
-        "&search_type=images")
+        "&search_type=shopping" +
+        "&location=United+States")
         .then((response) => {
             return response.json();
         })
         .then((results) => {
-            let searchQuery = results;
-            console.log(JSON.stringify(searchQuery))
-            console.log(searchQuery);
+            let searchQuery = results.shopping_results;
+            console.log(JSON.stringify(searchQuery));
+            tablePlaceholderPopulate(searchQuery);
         });
 }
 
 // Table Placeholder Populate may not be renamed to tablePopulate.
 // Functionally the same as the custom color table with differences in its output
 let tablePlaceholderPopulate = function(imageResultsArr) {
+
     let table = document.getElementById("results_Grid");
     let tr;
 
     for (let i = 0; i < imageResultsArr.length; i++) {
-        console.log(imageResultsArr[i]);
+
+        // console.log(imageResultsArr[i]);
         let td = document.createElement('td');
         td.style.maxWidth = "100px";
         td.style.padding = "10px";
-        if (!(i % 10)) {
+        if (!(i % 5)) {
             // Start a new row and stylize it
             tr = document.createElement('tr');
             tr.style.maxWidth = "100px";
             table.appendChild(tr);
         }
+
+        let link = document.createElement('a');
+        link.href = imageResultsArr[i].link.replace("/url?url=", "");
+        console.log(imageResultsArr[i].link.replace("/url?url=", ""));
+        link.setAttribute('target', '_blank');
+
         // Create inline img and stylize it before appending it. May separate this
         // into a separate function and expand it with a fully dynamically generated table cell.
         let img = document.createElement('img');
@@ -537,11 +546,25 @@ let tablePlaceholderPopulate = function(imageResultsArr) {
         img.src = imgSrc;
         img.style.maxWidth = "100%";
         img.style.padding = "10px";
-        td.appendChild(img);
+        img.style.verticalAlign = "center";
+
+        let title = document.createTextNode(imageResultsArr[i].title);
+        let brand = document.createTextNode(imageResultsArr[i].price_raw);
+
+        let titlePara = document.createElement('p');
+        let brandPara = document.createElement('p');
+        brandPara.style.textAlign = "center";
+        titlePara.style.textAlign = "center";
+
+        titlePara.appendChild(title);
+        brandPara.appendChild(brand);
+
+        link.appendChild(img);
+        link.appendChild(titlePara);
+        link.appendChild(brandPara);
+        td.appendChild(link);
         tr.appendChild(td);
-
     }
-
 }
 
 // Test Static Search Results (No Live API)
