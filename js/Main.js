@@ -78,6 +78,10 @@ let getHREFLinkSP = function(colorToSearch, colorCode){
     return str;
 }
 
+
+//
+
+
 // On Click functionality for our buttons.
 // Color name is passed from HTML, used to traverse the CDLL, and display the colors to the user.
 let onColorClick = function (colorName) {
@@ -522,7 +526,6 @@ let tablePlaceholderPopulate = function(imageResultsArr) {
     let tr;
 
     for (let i = 0; i < imageResultsArr.length; i++) {
-
         // console.log(imageResultsArr[i]);
         let td = document.createElement('td');
         td.style.maxWidth = "100px";
@@ -533,6 +536,7 @@ let tablePlaceholderPopulate = function(imageResultsArr) {
             tr.style.maxWidth = "100px";
             table.appendChild(tr);
         }
+
 
         let link = document.createElement('a');
         link.href = imageResultsArr[i].link.replace("/url?url=", "");
